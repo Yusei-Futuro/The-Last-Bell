@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TBL.views import hello
+from TBL.views import login_true, register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",hello)
+    path("", login_true),
+    path("regis/", register)
 ]
