@@ -9,9 +9,25 @@ def hello(request):
     return HttpResponse("Hello world")
 
 def login_true(request):
-    return render(request, "login.html", {
-        "form": Login
-    })
+        if request.method == "GET":
+            return render(request, "login.html", {
+                "form": Login
+            })
+        else:
+            form = Login(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data["user"]
+                password = form.cleaned_data["password"]
+
+                user=Username.objects.filter(user=username, password=password).first()
+                if user:
+                    return redirect("Main/")
+                else:
+                    form.add_error(None, "Usuario o contraseña incorrectos")
+
+            return render(request, "login.html", {
+                "form": form
+            })
 
 def register(request):
     if request.method == "GET":
