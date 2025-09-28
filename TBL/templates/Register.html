@@ -1,9 +1,11 @@
 
 <h1>Register</h1>
 
-<form action="">
+<form method="post">
 
     {{form.as_p}}
+    {% csrf_token %}
+
     <button>
         Register
     </button>

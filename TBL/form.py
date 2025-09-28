@@ -1,6 +1,8 @@
 from importlib.metadata import requires
 
 from django import forms
+from django.forms import CharField
+
 
 class Login(forms.Form):
 
@@ -13,9 +15,3 @@ class Register(forms.Form):
     last_name=forms.CharField(label="Apellidos", max_length= 10)
     user=forms.CharField(label="Usuario", max_length=10)
     password=forms.CharField(label="Contraseña", max_length=10)
-    confirm_password=forms.CharField(label="Confirmar contraseña", max_length=10)
-
-    if password == confirm_password:
-        print("Username save")
-    else:
-        print("Password not is same")

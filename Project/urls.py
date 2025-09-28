@@ -16,10 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TBL.views import login_true, register
+from TBL.views import login_true, register, hello
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", login_true),
-    path("regis/", register)
+    path("regis/", register),
+    path("menu/", hello),
+
+    #URL de las situaciones
+
+    path("menu/", hello),
+    path("menu/", hello),
+    path("menu/", hello),
+    path("menu/", hello),
+    path("menu/", hello),
 ]

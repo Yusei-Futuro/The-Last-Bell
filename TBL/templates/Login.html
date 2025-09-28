@@ -5,6 +5,8 @@
 <form action="">
 
     {{form.as_p}}
+    {% csrf_token %}
+
     <button>
         Save
     </button>
