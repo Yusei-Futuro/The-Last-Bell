@@ -1,3 +1,5 @@
+from random import choice
+
 from django.db import models
 
 # Create your models here.
@@ -21,7 +23,7 @@ class Dialogue(models.Model):
     decision_point = models.BooleanField(default=False)
 
 class Choice(models.Model):
-    dialogue = models.ForeignKey(Dialogue, on_delete=models.CASCADE)
+    dialogue = models.ForeignKey(Dialogue, on_delete=models.CASCADE, related_name="choice_from")
     text = models.CharField(max_length=200)
     consequence = models.TextField()
-    next_dialogue = models.ForeignKey(Dialogue, on_delete=models.SET_NULL, null=True, blank=True)
+    next_dialogue = models.ForeignKey(Dialogue, on_delete=models.SET_NULL, null=True, blank=True,related_name="choice_to")

@@ -32,7 +32,7 @@ urlpatterns = [
     path("menu/", hello),
     path("menu/", hello),
 
-    path('', views.dialogue_view, {'dialogue_id': 1}, name='home'),
-    path('dialogue/<int:dialogue_id>/', views.dialogue_view, name='dialogue_view'),
-    path('choice/<int:choice_id>/', views.choice_view, name='choice_view'),
+    path('', dialogue_view, {'dialogue_id': 1}, name='home'),
+    path('dialogue/<int:dialogue_id>/', dialogue_view, name='dialogue_view'),
+    path('choice/<int:choice_id>/', choice_view, name='choice_view'),
 ]
