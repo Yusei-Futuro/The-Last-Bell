@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TBL.views import login_true, register, hello
+from TBL.views import login_true, register, hello,  dialogue_view, choice_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +31,8 @@ urlpatterns = [
     path("menu/", hello),
     path("menu/", hello),
     path("menu/", hello),
+
+    path('', views.dialogue_view, {'dialogue_id': 1}, name='home'),
+    path('dialogue/<int:dialogue_id>/', views.dialogue_view, name='dialogue_view'),
+    path('choice/<int:choice_id>/', views.choice_view, name='choice_view'),
 ]

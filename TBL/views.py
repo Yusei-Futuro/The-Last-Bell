@@ -1,5 +1,5 @@
-from django.shortcuts import render , redirect
-from .models import Username
+from django.shortcuts import render , redirect, get_object_or_404
+from .models import Username, Dialogue, Choice
 from django.http import JsonResponse, HttpResponse
 from .form import Login, Register
 
@@ -42,3 +42,14 @@ def register(request):
                                 )
 
         return redirect("regis/")
+
+#Parte de pablo sobre el game
+
+def dialogue_view(request, dialogue_id):
+    dialogue = get_object_or_404(Dialogue, pk=dialogue_id)
+    choices = Choice.objects.filter(dialogue=dialogue) if dialogue.decision_point else []
+    return render(request, 'game/dialogue.html', {'dialogue': dialogue, 'choices': choices})
+
+def choice_view(request, choice_id):
+    choice = get_object_or_404(Choice, pk=choice_id)
+    return render(request, 'game/consequence.html', {'choice': choice})
