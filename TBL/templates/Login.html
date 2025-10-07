@@ -1,13 +1,9 @@
 
-{% load static %}
-
 {% block content %}
 
-<h1>Login</h1>
+<h1>Sing up</h1>
 
-<img src="{% static 1.png %}">
-
-<form action="">
+<form action="/Main/", method="Post">
 
     {{form.as_p}}
     {% csrf_token %}
