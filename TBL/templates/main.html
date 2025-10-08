@@ -7,9 +7,26 @@
 </head>
 <body>
 
+
+
+    <na>
+        <ur>
+            <li>
+                <a href="/">Main</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/singup">Sing</a>
+            </li>
+            {% endif %}
+        </ur>
+    </na>
+
     {% block content %}
-
-
 
     {% endblock %}
 
