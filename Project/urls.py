@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from TBL.views import login, dialogue_view, choice_view, main
+from TBL.views import sing, dialogue_view, choice_view, main
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("singup/", login),
-    path("", main),
+    path("", sing),
+    path("main/", main),
 
 
     #Parte del game

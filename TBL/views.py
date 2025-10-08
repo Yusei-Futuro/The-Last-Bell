@@ -3,24 +3,25 @@ from .models import Username, Dialogue, Choice
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 # Create your views here.
 def main(request):
     return HttpResponse("<h1>Welcome</h1>")
 
-def login(request):
+def sing(request):
     if request.method == "GET":
         return render(request, "Login.html", {
             "form": UserCreationForm
         })
     else:
-        print(request.POST)
         if request.POST["password1"] == request.POST["password2"]:
             try:
                 user = User.objects.create_user(username=request.POST["username"],
                                                 password=request.POST["password"])
                 user.save()
-                return HttpResponse("User create")
+                login(request, user)
+                return redirect("main")
             except:
                 return render(request, "Login.html",{
                     "form": UserCreationForm,
