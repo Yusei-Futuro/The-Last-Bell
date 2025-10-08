@@ -3,7 +3,9 @@
 
 <h1>Sing up</h1>
 
-<form action="/Main/", method="Post">
+{{Error}}
+
+<form action="/Main/", method="POST">
 
     {{form.as_p}}
     {% csrf_token %}

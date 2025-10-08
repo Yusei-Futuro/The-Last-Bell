@@ -9,21 +9,28 @@ def main(request):
     return HttpResponse("<h1>Welcome</h1>")
 
 def login(request):
-    if request.method == "Get":
+    if request.method == "GET":
         return render(request, "Login.html", {
             "form": UserCreationForm
         })
     else:
-        if request.Post["password1"] == request.Post["password2"]:
+        print(request.POST)
+        if request.POST["password1"] == request.POST["password2"]:
             try:
-                user = User.objects.create_user(username=request.Post["username"],
-                                                password=request.Post["password1"])
+                user = User.objects.create_user(username=request.POST["username"],
+                                                password=request.POST["password"])
                 user.save()
                 return HttpResponse("User create")
             except:
-                return HttpResponse("User save")
+                return render(request, "Login.html",{
+                    "form": UserCreationForm,
+                    "Error": "User already exist"
+                })
 
-        return HttpResponse("Password incorrect")
+        return render(request,"Login.html",{
+            "Form":UserCreationForm,
+            "Error": "Password not same"
+        })
 
 #Parte de pablo sobre el game
 
