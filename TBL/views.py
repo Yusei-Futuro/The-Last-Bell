@@ -1,9 +1,9 @@
 from django.shortcuts import render , redirect, get_object_or_404
 from .models import Username, Dialogue, Choice
 from django.http import JsonResponse, HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 # Create your views here.
 def main(request):
@@ -45,8 +45,22 @@ def logo_out(request):
     return redirect("main_player")
 
 def singin(request):
-    return render(request, "singin.html")
+    if request.method == "GET":
+        return render(request, "singin.html", {
+            "form": AuthenticationForm()
+        })
+    else:
+        user = authenticate(request, user=request.POST["username"], password=request.POST["password1"])
 
+        if user == None:
+            return render(request, "singin.html", {
+                "form": AuthenticationForm(),
+                "Error": "Error en la contraseña o el usuario pruebe otra vez"
+            })
+
+        else:
+            login(request, user)
+            return redirect("main")
 
 #Parte de pablo sobre el game
 

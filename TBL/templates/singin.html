@@ -2,5 +2,20 @@
 {% extends "main.html" %}
 
 {% block content %}
+
 <h1>Sing in</h1>
+
+{{Error}}
+
+<form action="/singin" method="POST">
+
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button>
+        Sing in
+    </button>
+
+</form>
+
 {% endblock %}
