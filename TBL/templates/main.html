@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Last Bell</title>
+</head>
+<body>
+
+
+
+    <na>
+        <ur>
+            <li>
+                <a href="/">Main</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/singup">Singup</a>
+            </li>
+            <li>
+                <a href="/singin">Singin</a>
+            </li>
+            {% endif %}
+        </ur>
+    </na>
+
+    {% block content %}
+
+    {% endblock %}
+
+</body>
+</html>

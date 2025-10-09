@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Derbi de Corazones</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <main role="main" aria-label="Zona de diálogo">
+        <section class="dialogue-box">
+            <h2>{{ dialogue.character.name }}</h2>
+            {% if dialogue.character.image_url %}
+                <img src="{{ dialogue.character.image_url }}" alt="Retrato de {{ dialogue.character.name }}" class="character-img">
+            {% endif %}
+            <p class="dialogue-text">{{ dialogue.text }}</p>
+        </section>
+
+        {% if choices %}
+            <section class="choices" aria-label="Opciones de decisión">
+                <h3>¿Qué quieres responder?</h3>
+                <ul>
+                    {% for choice in choices %}
+                        <li>
+                            <a href="{% url 'choice_view' choice.id %}" class="choice-button">
+                                {{ choice.text }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% else %}
+            <section class="continue">
+                <a href="{% url 'dialogue_view' dialogue.id|add:1 %}" class="continue-button">Continuar</a>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
