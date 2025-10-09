@@ -44,6 +44,8 @@ def logo_out(request):
     logout(request)
     return redirect("main_player")
 
+def singin(request):
+    return render(request, "singin.html")
 
 
 #Parte de pablo sobre el game
