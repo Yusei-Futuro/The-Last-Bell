@@ -4,30 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>The Last Bell</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" type="text/css">
 </head>
 <body>
 
-
-
-    <na>
-        <ur>
-            <li>
-                <a href="/">Main</a>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">The Last Bell</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a href="/" class="nav-link">Main</a>
             </li>
             {% if user.is_authenticated %}
-            <li>
-                <a href="/logout">Logout</a>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link">Logout</a>
             </li>
             {% else %}
-            <li>
-                <a href="/singup">Singup</a>
+            <li class="nav-item">
+                <a href="/singup" class="nav-link">Singup</a>
             </li>
-            <li>
-                <a href="/singin">Singin</a>
+            <li class="nav-item">
+                <a href="/singin" class="nav-link">Singin</a>
             </li>
             {% endif %}
-        </ur>
-    </na>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
 
     {% block content %}
 

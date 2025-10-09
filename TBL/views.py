@@ -7,14 +7,10 @@ from django.contrib.auth import login, logout, authenticate
 
 # Create your views here.
 def main(request):
-    return render(request,"main game.html", {
-        "form": main
-    })
+    return render(request,"main game.html")
 
 def main_game(request):
-    return render(request, "main_base.html",{
-        "from": main
-    })
+    return render(request, "main_base.html")
 
 def sing(request):
     if request.method == "GET":
