@@ -1,21 +1,50 @@
 
-{% extends "main.html" %}
+{% extends "base_sing.html" %}
 
+{% load static %}
 {% block content %}
 
-<h1>Sing in</h1>
+<section class="vh-100 gradient-custom" style="background-image: url('{% static "singin.jpg" %}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;">
 
-{{Error}}
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-light text-dark" style="border-radius: 1rem; --bs-bg-opacity: 0.8;">
 
-<form action="/singin" method="POST">
+          <div class="card-body p-5 text-center" style="--bs-bg-opacity: 0.8;">
+              <div class="text-center">
+                  <img src="{% static "Logotipo.jpg" %}";
+                    style="width: 100px;" alt="logo">
+                  <h4 class="mt-1 mb-5 pb-1">Sign in</h4>
+              </div>
 
-    {% csrf_token %}
-    {{form.as_p}}
 
-    <button>
-        Sing in
-    </button>
+            {{Error}}
 
-</form>
+            <form action="/main/" method="POST">
+
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <button>
+                    Sign in
+                </button>
+                <button>
+                    <a href="/singup/">
+                        Sign up
+                    </a>
+                </button>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
