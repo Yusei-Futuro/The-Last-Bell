@@ -4,8 +4,11 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+@login_required()
 def main(request):
     return render(request,"main game.html")
 
@@ -46,7 +49,7 @@ def singin(request):
             "form": AuthenticationForm()
         })
     else:
-        user = authenticate(request, user=request.POST["username"], password=request.POST["password1"])
+        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
 
         if user == None:
             return render(request, "singin.html", {
@@ -56,7 +59,7 @@ def singin(request):
 
         else:
             login(request, user)
-            return redirect("main")
+            return redirect("/main/")
 
 #Parte de pablo sobre el game
 
