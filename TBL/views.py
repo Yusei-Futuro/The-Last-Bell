@@ -9,15 +9,15 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 @login_required()
-def main(request):
+def main_game(request):
     return render(request,"main game.html")
 
-def main_game(request):
+def main(request):
     return render(request, "main_base.html")
 
-def sing(request):
+def sign(request):
     if request.method == "GET":
-        return render(request, "Login.html", {
+        return render(request, "signup.html", {
             "form": UserCreationForm()
         })
     else:
@@ -29,12 +29,12 @@ def sing(request):
                 login(request, user)
                 return redirect("main_player")
             except:
-                return render(request, "Login.html",{
+                return render(request, "signup.html",{
                     "form": UserCreationForm(),
                     "Error": "User already exist"
                 })
 
-        return render(request,"Login.html",{
+        return render(request,"signup.html",{
             "Form":UserCreationForm(),
             "Error": "Password not same"
         })
