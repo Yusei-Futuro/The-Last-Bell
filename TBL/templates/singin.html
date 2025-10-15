@@ -14,11 +14,11 @@
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card bg-light text-dark" style="border-radius: 1rem; --bs-bg-opacity: 0.8;">
 
-          <div class="card-body p-5 text-center" style="--bs-bg-opacity: 0.8;">
-              <div class="text-center">
+          <div class="card-body p-5" style="--bs-bg-opacity: 0.8;">
+              <div style="text-align-last: center">
                   <img src="{% static "Logotipo.jpg" %}";
                     style="width: 100px;" alt="logo">
-                  <h4 class="mt-1 mb-5 pb-1">Sign in</h4>
+                  <h4 class="mt-1 mb-5 pb-1" style="margin-bottom: 10px !important">Sign in</h4>
               </div>
 
 
@@ -27,16 +27,25 @@
             <form action="" method="POST">
 
                 {% csrf_token %}
-                {{form.as_p}}
+                <div class="mb-3">
+                    <label for="username" class="align-left">Username</label>
+                    <input type="text" name="username" class="form-control"  id="username"
+                               placeholder="Write your username">
+                </div>
+                <div class="mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control"  id="password"
+                               placeholder="Write your password">
+                </div>
+
 
                 <button>
                     Sign in
                 </button>
-                <button>
-                    <a href="/singup/">
-                        Sign up
-                    </a>
-                </button>
+
+                <p class="text-center text-muted mt-5 mb-0; margin-top: 10px">Have you account?<a href="/singup"
+                    class="fw-bold text-body"><u>Create an account</u></a></p>
+
 
             </form>
 
