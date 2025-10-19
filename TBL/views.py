@@ -45,14 +45,14 @@ def logo_out(request):
 
 def singin(request):
     if request.method == "GET":
-        return render(request, "singin.html", {
+        return render(request, "signin.html", {
             "form": AuthenticationForm()
         })
     else:
         user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
 
         if user == None:
-            return render(request, "singin.html", {
+            return render(request, "signin.html", {
                 "form": AuthenticationForm(),
                 "Error": "Error en la contraseña o el usuario pruebe otra vez"
             })

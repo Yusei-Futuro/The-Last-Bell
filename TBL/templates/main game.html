@@ -2,32 +2,33 @@
 {% extends "base_sing.html" %}
 {% load static %}
 {% block content %}
+<main>
+    <section class="h-100 gradient-form" style="background-image: url('{% static "main.jpg" %}');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;">
 
-<section class="h-100 gradient-form" style="background-image: url('{% static "main.jpg" %}');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;">
-
-    <div class="container py-5 h-100">
-        <div>
+        <div class="container py-5 h-100">
             <div>
                 <div>
                     <div>
-                        <button>
-                            <a href="/start1/">
-                                Start game
-                            </a>
-                        </button>
+                        <div>
+                            <button>
+                                <a href="/start1/">
+                                    Start game
+                                </a>
+                            </button>
+                        </div>
+                            <button>
+                                <a href="/loadgame/">
+                                    Load game
+                                </a>
+                            </button>
                     </div>
-                        <button>
-                            <a href="/loadgame/">
-                                Load game
-                            </a>
-                        </button>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
 {% endblock %}
