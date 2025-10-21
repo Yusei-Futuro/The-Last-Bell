@@ -127,8 +127,8 @@ class Character(models.Model):
     )
 
     class Meta:
-        verbose="Personaje"
-        verbose_plural="Personajes"
+        verbose_name="Personaje"
+        verbose_name_plural="Personajes"
         ordering=["name"]
 
     def __str__(self):
@@ -266,7 +266,7 @@ class Dialogue(models.Model):
     class Meta:
         verbose_name = "Línea de Diálogo"
         verbose_name_plural = "Líneas de Diálogo"
-        ordering = ['situation', 'order']
+        ordering = ['situation', 'orden']
 
     def __str__(self):
         return f"{self.situation} - Línea {self.orden}: {self.get_line_type_display()}"
@@ -283,7 +283,7 @@ class Choice(models.Model):
     dialogue = models.ForeignKey(
         Dialogue,
         on_delete=models.CASCADE,
-        related_name="choice"
+        related_name="choices"
     )
 
     text_choice=models.CharField(
@@ -308,7 +308,7 @@ class Choice(models.Model):
 
     type_choice=models.CharField(
         max_length=20,
-        choice=CHOICE_TYPE_CHOICES
+        choices=CHOICE_TYPE_CHOICES
     )
 
     friendship_points = models.IntegerField(
@@ -319,7 +319,7 @@ class Choice(models.Model):
     class Meta:
         verbose_name = "Opción de Decisión"
         verbose_name_plural = "Opciones de Decisión"
-        ordering = ['dialogue_line', 'order']
+        ordering = ['dialogue', 'order']
 
     def __str__(self):
         return f"{self.text_choice[:50]} ({self.type_choice})"
