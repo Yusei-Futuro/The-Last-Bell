@@ -224,17 +224,144 @@ class Situations(models.Model):
         return f"Día {self.day}: {self.title}"
 
 class Dialogue(models.Model):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    text = models.TextField()
-    decision_point = models.BooleanField(default=False)
+
+    TYPE_CHOICES = [
+        ('narration', 'Narración'),
+        ('came_thought', 'Pensamiento de Came (Came*:)'),
+        ('came_speech', 'Came habla'),
+        ('npc_speech', 'NPC habla'),
+        ('system', 'Mensaje del sistema'),
+    ]
+
+    character = models.ForeignKey(Character,
+                                  on_delete=models.CASCADE,
+                                  null=True,
+                                  blank=True,
+                                  related_name="dialogue_lines"
+                                               )
+
+    situation=models.ForeignKey(Situations,
+                               on_delete=models.CASCADE,
+                               related_name="dialogue_lines"
+                               )
+
+    text = models.TextField(
+        help_text="Para saber el dialogo"
+    )
+
+    decision_point = models.BooleanField(
+        default=False,
+        help_text="Para comprobar si lo de alante es un dialogo o no"
+    )
+
+    lines_type= models.CharField(
+        max_length=200,
+        choices=TYPE_CHOICES
+    )
+
+    orden= models.IntegerField(
+        help_text="Orden en que aparecen en la linea de texto"
+    )
+
+    class Meta:
+        verbose_name = "Línea de Diálogo"
+        verbose_name_plural = "Líneas de Diálogo"
+        ordering = ['situation', 'order']
+
+    def __str__(self):
+        return f"{self.situation} - Línea {self.orden}: {self.get_line_type_display()}"
 
 class Choice(models.Model):
-    dialogue = models.ForeignKey(Dialogue, on_delete=models.CASCADE, related_name="choice_from")
-    text = models.CharField(max_length=200)
-    consequence = models.TextField()
-    next_dialogue = models.ForeignKey(Dialogue, on_delete=models.SET_NULL, null=True, blank=True,related_name="choice_to")
 
-class GameSave(models.Model): #Para hablar con simon manana sobre esto
+    CHOICE_TYPE_CHOICES = [
+        ('buena', 'Decisión Buena'),
+        ('mala', 'Decisión Mala'),
+        ('intermedia', 'Decisión Intermedia'),
+        ('neutral', 'Decisión Neutral'),
+    ]
+
+    dialogue = models.ForeignKey(
+        Dialogue,
+        on_delete=models.CASCADE,
+        related_name="choice"
+    )
+
+    text_choice=models.CharField(
+        max_length=300
+    )
+
+    consequence = models.TextField(
+        help_text="para saber que pasa despues"
+    )
+
+    order = models.IntegerField(
+        default=0,
+    )
+
+    next_dialogue = models.ForeignKey(
+        Dialogue,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="choice"
+    )
+
+    type_choice=models.CharField(
+        max_length=20,
+        choice=CHOICE_TYPE_CHOICES
+    )
+
+    friendship_points = models.IntegerField(
+        default=0,
+        help_text="Puntos que suma/resta a la relación con el NPC (+10 buena, -5 mala, 0 neutral)"
+    )
+
+    class Meta:
+        verbose_name = "Opción de Decisión"
+        verbose_name_plural = "Opciones de Decisión"
+        ordering = ['dialogue_line', 'order']
+
+    def __str__(self):
+        return f"{self.text_choice[:50]} ({self.type_choice})"
+
+class History_Choice(models.Model):
+
+    player=models.ForeignKey(
+        Username,
+        on_delete=models.CASCADE,
+        related_name="history",
+    )
+
+    choice=models.ForeignKey(
+        Choice,
+        on_delete=models.CASCADE,
+        related_name="history"
+    )
+
+    situation=models.ForeignKey(
+        Situations,
+        on_delete=models.CASCADE
+    )
+
+    day=models.IntegerField(
+        help_text="Para saber cuando tomo las decisiones"
+    )
+
+    points_earned = models.IntegerField(
+        help_text="Puntos de amistad que ganó/perdió con esta decisión"
+    )
+
+    class Meta:
+        verbose_name = "Historial de Decisión"
+        verbose_name_plural = "Historial de Decisiones"
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.player.user.username} - Día {self.day}: {self.choice.text_choice[:30]}"
+
+#Preguntar a mi papa si es necesario un modelo sobre NPCrelation
+
+class GameSave(models.Model):
 
     perfil=models.ForeignKey(
         Username,
