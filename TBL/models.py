@@ -269,7 +269,7 @@ class Dialogue(models.Model):
         ordering = ['situation', 'orden']
 
     def __str__(self):
-        return f"{self.situation} - Línea {self.orden}: {self.get_line_type_display()}"
+        return f"{self.situation} - Línea {self.orden}: {self.lines_type}"
 
 class Choice(models.Model):
 
@@ -354,12 +354,76 @@ class History_Choice(models.Model):
     class Meta:
         verbose_name = "Historial de Decisión"
         verbose_name_plural = "Historial de Decisiones"
-        ordering = ['-timestamp']
 
     def __str__(self):
         return f"{self.player.user.username} - Día {self.day}: {self.choice.text_choice[:30]}"
 
-#Preguntar a mi papa si es necesario un modelo sobre NPCrelation
+class NPCRelationship(models.Model):
+
+    player = models.ForeignKey(
+        Username,
+        on_delete=models.CASCADE,
+        related_name='npc_relationships',
+        help_text="Perfil del jugador"
+    )
+
+    character = models.ForeignKey(
+        Character,
+        on_delete=models.CASCADE,
+        related_name='player_relationships',
+        help_text="Personaje NPC"
+    )
+
+
+
+    friendship_points = models.IntegerField(
+        default=0,
+        help_text="Puntos de amistad acumulados con este NPC"
+    )
+
+    is_friend = models.BooleanField(
+        default=False,
+        help_text="True si friendship_points >= character.friendship_threshold"
+    )
+
+    knows_condition = models.BooleanField(
+        default=False,
+        help_text="Si este NPC sabe sobre la condición del jugador"
+    )
+
+    revealed_on_day = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="En qué día el jugador reveló su condición a este NPC"
+    )
+
+    interactions_count = models.IntegerField(
+        default=0,
+        help_text="Cantidad de veces que interactuó con este NPC"
+    )
+
+    last_interaction = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Última vez que interactuó con este NPC"
+    )
+
+    class Meta:
+        verbose_name = "Relación con NPC"
+        verbose_name_plural = "Relaciones con NPCs"
+        unique_together = ['player', 'character']
+
+    def __str__(self):
+        status = "Amigos" if self.is_friend else f"{self.friendship_points} pts"
+        return f"{self.player.user.username} ↔ {self.character.name}: {status}"
+
+    def update_friendship(self, points):
+        self.friendship_points += points
+        self.is_friend = self.friendship_points >= self.character.friendship_threshold
+        self.interactions_count += 1
+        from django.utils import timezone
+        self.last_interaction = timezone.now()
+        self.save()
 
 class GameSave(models.Model):
 

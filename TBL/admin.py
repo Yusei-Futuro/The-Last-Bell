@@ -18,6 +18,6 @@ class DialogueAdmin(admin.ModelAdmin):
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ('dialogue', 'text', 'next_dialogue')
+    list_display = ('dialogue', 'text_choice', 'next_dialogue')
     search_fields = ('text', 'consequence')
     autocomplete_fields = ['dialogue', 'next_dialogue']
