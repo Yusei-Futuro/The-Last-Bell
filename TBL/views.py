@@ -76,16 +76,14 @@ def dialogue_view(request, dialogue_id):
 def choice_view(request, choice_id):
     choice = get_object_or_404(Choice, pk=choice_id)
 
-    # Actualizar puntos de amistad (karma)
-    karma = request.session.get('karma', 0)
-    karma += choice.friendship_points
-    request.session['karma'] = karma
-    request.session['karma'] = karma
+    # Actualizar puntos de amistad
+    request.session['friendship'] = request.session.get('friendship', 0)
+    request.session['friendship'] += choice.friendship_points
 
     # Ir al siguiente diálogo automáticamente
     if choice.next_dialogue:
         return redirect('dialogue_view', dialogue_id=choice.next_dialogue.id)
     else:
         # Si no hay siguiente diálogo, ir al menú principal
-        return redirect('main')  # Aquí reemplaza 'main' por la ruta de tu menú principal
+        return redirect('main')  # Aquí 'main' es tu ruta del menú principal
 
