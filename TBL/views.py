@@ -65,9 +65,27 @@ def singin(request):
 
 def dialogue_view(request, dialogue_id):
     dialogue = get_object_or_404(Dialogue, pk=dialogue_id)
-    choices = Choice.objects.filter(dialogue=dialogue) if dialogue.decision_point else []
-    return render(request, 'game/dialogue.html', {'dialogue': dialogue, 'choices': choices})
+    choices = dialogue.choices.all() if dialogue.decision_point else []
+    return render(request, 'game.html', {
+        'dialogue': dialogue,
+        'choices': choices
+    })
+
+
 
 def choice_view(request, choice_id):
     choice = get_object_or_404(Choice, pk=choice_id)
-    return render(request, 'game/consequence.html', {'choice': choice})
+
+    # Actualizar puntos de amistad (karma)
+    karma = request.session.get('karma', 0)
+    karma += choice.friendship_points
+    request.session['karma'] = karma
+    request.session['karma'] = karma
+
+    # Ir al siguiente diálogo automáticamente
+    if choice.next_dialogue:
+        return redirect('dialogue_view', dialogue_id=choice.next_dialogue.id)
+    else:
+        # Si no hay siguiente diálogo, ir al menú principal
+        return redirect('main')  # Aquí reemplaza 'main' por la ruta de tu menú principal
+

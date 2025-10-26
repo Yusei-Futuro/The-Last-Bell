@@ -22,13 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("singup/", sign, name="sing"),
     path("main/", main_game, name="main"),
-    path("", main, name="main_plater"),
+    path("", main, name="main_player"),
     path("logout/", logo_out, name="logout"),
     path("singin/", singin, name="singin"),
 
 
     #Parte del game
-    path('', dialogue_view, {'dialogue_id': 1}, name='home'),
+    path("jugar/", dialogue_view, {'dialogue_id': 1}, name="start_level1"),
     path('dialogue/<int:dialogue_id>/', dialogue_view, name='dialogue_view'),
     path('choice/<int:choice_id>/', choice_view, name='choice_view'),
 ]
