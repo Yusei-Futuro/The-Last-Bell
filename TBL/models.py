@@ -425,10 +425,4 @@ class NPCRelationship(models.Model):
         self.last_interaction = timezone.now()
         self.save()
 
-class GameSave(models.Model):
 
-    perfil=models.ForeignKey(
-        Username,
-        on_delete=models.CASCADE,
-        related_name="gamesave"
-    )
