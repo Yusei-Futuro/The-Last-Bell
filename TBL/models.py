@@ -186,7 +186,6 @@ class Situations(models.Model):
     )
 
     day=models.IntegerField(
-        unique=True,
         help_text="Numero de situacion en la que me encuentro"
     )
 
@@ -259,13 +258,13 @@ class Dialogue(models.Model):
         help_text="Para comprobar si lo de alante es un dialogo o no"
     )
 
-    lines_type= models.CharField(
+    line_type= models.CharField(
         max_length=200,
         choices=TYPE_CHOICES,
         default="narration"
     )
 
-    orden= models.IntegerField(
+    order= models.IntegerField(
         help_text="Orden en que aparecen en la linea de texto",
         default=0
     )
@@ -273,10 +272,10 @@ class Dialogue(models.Model):
     class Meta:
         verbose_name = "Línea de Diálogo"
         verbose_name_plural = "Líneas de Diálogo"
-        ordering = ['situation', 'orden']
+        ordering = ['situation', 'order']
 
     def __str__(self):
-        return f"{self.situation} - Línea {self.orden}: {self.lines_type}"
+        return f"{self.situation} - Línea {self.order}: {self.line_type}"
 
 class Choice(models.Model):
 
