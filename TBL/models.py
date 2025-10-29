@@ -122,9 +122,9 @@ class Character(models.Model):
 
 
 
-    personality=models.TextField(
-        help_text="Personalidad"
-        default= "sin definir"
+    personality= models.TextField(
+        help_text="Personalidad",
+        default = "sin definir"
     )
     is_friend=models.IntegerField(
         default=20,
