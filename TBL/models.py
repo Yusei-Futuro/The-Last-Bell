@@ -120,8 +120,6 @@ class Character(models.Model):
     
 )
 
-
-
     personality= models.TextField(
         help_text="Personalidad",
         default = "sin definir"
