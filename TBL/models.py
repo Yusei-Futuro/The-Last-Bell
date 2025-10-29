@@ -245,7 +245,8 @@ class Dialogue(models.Model):
 
     situation=models.ForeignKey(Situations,
                                on_delete=models.CASCADE,
-                               related_name="dialogue_lines"
+                               related_name="dialogue_lines",
+                                default="Sin definir"
                                )
 
     text = models.TextField(
@@ -259,11 +260,13 @@ class Dialogue(models.Model):
 
     lines_type= models.CharField(
         max_length=200,
-        choices=TYPE_CHOICES
+        choices=TYPE_CHOICES,
+        default="Sin definir"
     )
 
     orden= models.IntegerField(
-        help_text="Orden en que aparecen en la linea de texto"
+        help_text="Orden en que aparecen en la linea de texto",
+        default="Sin definir"
     )
 
     class Meta:
@@ -290,7 +293,8 @@ class Choice(models.Model):
     )
 
     text_choice=models.CharField(
-        max_length=300
+        max_length=300,
+        default="Sin definir"
     )
 
     consequence = models.TextField(
@@ -311,7 +315,8 @@ class Choice(models.Model):
 
     type_choice=models.CharField(
         max_length=20,
-        choices=CHOICE_TYPE_CHOICES
+        choices=CHOICE_TYPE_CHOICES,
+        default="Sin definir"
     )
 
     friendship_points = models.IntegerField(
