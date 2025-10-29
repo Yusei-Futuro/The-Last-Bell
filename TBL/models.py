@@ -114,12 +114,17 @@ class Character(models.Model):
         blank=True,
         null=True,
                                 )
-    interesting=models.TextField(
-        help_text="Intereses del personaje para abordar mas la historia"
-    )
+    interesting = models.TextField(
+        help_text="Intereses del personaje para abordar mas la historia",
+        default="Sin descripción"
+    
+)
+
+
 
     personality=models.TextField(
         help_text="Personalidad"
+        default= "sin definir"
     )
     is_friend=models.IntegerField(
         default=20,
