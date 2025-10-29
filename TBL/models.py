@@ -246,7 +246,8 @@ class Dialogue(models.Model):
     situation=models.ForeignKey(Situations,
                                on_delete=models.CASCADE,
                                related_name="dialogue_lines",
-                                default="Sin definir"
+                                null=True,
+                                blank=True
                                )
 
     text = models.TextField(
@@ -261,12 +262,12 @@ class Dialogue(models.Model):
     lines_type= models.CharField(
         max_length=200,
         choices=TYPE_CHOICES,
-        default="Sin definir"
+        default="narration"
     )
 
     orden= models.IntegerField(
         help_text="Orden en que aparecen en la linea de texto",
-        default="Sin definir"
+        default=0
     )
 
     class Meta:
@@ -302,7 +303,7 @@ class Choice(models.Model):
     )
 
     order = models.IntegerField(
-        default=0,
+        default=0
     )
 
     next_dialogue = models.ForeignKey(
