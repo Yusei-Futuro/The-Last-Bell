@@ -24,7 +24,7 @@ class Command(BaseCommand):
         )
 
         Character.objects.get_or_create(
-            name="brad",
+            name="Brad",
             defaults={
                 "backstory": "Le encanta el futbol y socializar con nuevos compañeros",
                 "interesting": "Jugar y enseñar futbol",
@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
     def create_locations(self):
         Location.objects.get_or_create(
-            locations="patio",
+            locations="Patio",
             defaults={
                 "descriptions":"Un Amplio Patio con na cancha de futbol y espacio para el recreo"},
         )
