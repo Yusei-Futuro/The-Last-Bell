@@ -1,0 +1,35 @@
+{% extends "game/base_game.html" %}
+{% load static %}
+{% block content %}
+
+<section class="h-100 gradient-form" style="background-image: url('{% static "maingameprueba.jpg" %}');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    min-height: 100vh;
+                    width: 100%;
+">
+    <div class="main-menu text-center">
+    <h1 class="game-title">The Last Bell</h1>
+    <p class="game-subtitle">Un juego sobre inclusión y empatía</p>
+
+    <div class="menu-options mt-5">
+        {% if has_saved_game %}
+        <a href="{% url 'load_game' %}" class="btn btn-primary btn-lg mb-3">
+            Continuar Partida
+            <small class="d-block">Día {{ latest_save.player.current_day }} - {{ latest_save.timestamp|date:"d/m/Y H:i" }}</small>
+        </a>
+        {% endif %}
+
+        <a href="{% url 'new_game' %}" class="btn btn-success btn-lg mb-3">
+            Nueva Partida
+        </a>
+
+        <a href="{% url 'logout' %}" class="btn btn-secondary btn-lg">
+            Salir
+        </a>
+    </div>
+</div>
+</section>
+
+{% endblock %}

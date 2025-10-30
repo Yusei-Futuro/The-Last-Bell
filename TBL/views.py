@@ -17,15 +17,15 @@ def main_game(request):
     #Esta parte del codigo esta establecida para el desarrollo del menu del game con las opciones
     #Continuar partida si existe, cargar partida, resultados,salir
 
-    user=request.user.Username
+    player_profile=request.user.username
     #Buscame la parte de guardar partida
 
     context = {
-        'player_profile': user,
+        'player_profile': player_profile,
         #Tengo aca que buscar el ultimo guardado
     }
 
-    return render(request,"main game.html", context)
+    return render(request,"game/main game.html", context)
 
 @login_required
 def new_game(request):
@@ -169,7 +169,8 @@ def singin(request):
 
         else:
             login(request, user)
-            return redirect("/main/")
+            return redirect("main_game")
 
+#Me faltan aca otras view que tengo planeadas situation_complete, game_complete, continue_next_day
 
 
