@@ -11,6 +11,55 @@ from .models import Username, Situations, History_Choice, NPCRelationship
 
 # Create your views here.
 
+def main(request):
+    return render(request, "main_base.html")
+
+def sign(request):
+    if request.method == "GET":
+        return render(request, "signup.html", {
+            "form": UserCreationForm()
+        })
+    else:
+        if request.POST["password1"] == request.POST["password2"]:
+            try:
+                user = User.objects.create_user(username=request.POST["username"],
+                                                password=request.POST["password1"])
+                user.save()
+                login(request, user)
+                return redirect("main_player")
+            except:
+                return render(request, "signup.html",{
+                    "form": UserCreationForm(),
+                    "Error": "User already exist"
+                })
+
+        return render(request,"signup.html",{
+            "Form":UserCreationForm(),
+            "Error": "Password not same"
+        })
+
+def logo_out(request):
+    logout(request)
+    return redirect("main_player")
+
+def singin(request):
+    if request.method == "GET":
+        return render(request, "signin.html", {
+            "form": AuthenticationForm()
+        })
+    else:
+        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+
+        if user == None:
+            return render(request, "signin.html", {
+                "form": AuthenticationForm(),
+                "Error": "Error en la contraseña o el usuario pruebe otra vez"
+            })
+
+        else:
+            login(request, user)
+            return redirect("main_game")
+
 @login_required()
 def main_game(request):
 
@@ -122,55 +171,61 @@ def make_choice(request, choice_id):
 
     return redirect('play_situation', situation_id=situation.id)
 
-def main(request):
-    return render(request, "main_base.html")
-
-def sign(request):
-    if request.method == "GET":
-        return render(request, "signup.html", {
-            "form": UserCreationForm()
-        })
-    else:
-        if request.POST["password1"] == request.POST["password2"]:
-            try:
-                user = User.objects.create_user(username=request.POST["username"],
-                                                password=request.POST["password1"])
-                user.save()
-                login(request, user)
-                return redirect("main_player")
-            except:
-                return render(request, "signup.html",{
-                    "form": UserCreationForm(),
-                    "Error": "User already exist"
-                })
-
-        return render(request,"signup.html",{
-            "Form":UserCreationForm(),
-            "Error": "Password not same"
-        })
-
-def logo_out(request):
-    logout(request)
-    return redirect("main_player")
-
-def singin(request):
-    if request.method == "GET":
-        return render(request, "signin.html", {
-            "form": AuthenticationForm()
-        })
-    else:
-        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
-
-        if user == None:
-            return render(request, "signin.html", {
-                "form": AuthenticationForm(),
-                "Error": "Error en la contraseña o el usuario pruebe otra vez"
-            })
-
-        else:
-            login(request, user)
-            return redirect("main_game")
-
 #Me faltan aca otras view que tengo planeadas situation_complete, game_complete, continue_next_day
 
+@login_required
+def continue_to_next_day(request):
+    player_profile = request.user.username
 
+    player_profile.advance_to_next_day()
+    next_situation = Situations.objects.filter(day=player_profile.current_day).first()
+
+    if next_situation:
+        return redirect('play_situation', situation_id=next_situation.id)
+    else:
+        return redirect('game_complete')
+
+@login_required
+def game_complete(request):
+    player_profile = request.user.username
+    friends_count = player_profile.calculate_friends()
+
+    relationships = player_profile.npc_relationships.all().order_by('-friendship_points')
+
+    player_profile.final= True
+    player_profile.save()
+
+    context = {
+        'player_profile': player_profile,
+        'friends_count': friends_count,
+        'relationships': relationships,
+        'total_days': 7,
+    }
+    return render(request, 'game/game_complete.html', context)
+
+@login_required
+def situation_complete(request, situation_id):
+
+    player_profile = request.user.username
+    situation = get_object_or_404(Situations, id=situation_id)
+
+    player_profile.current_situation_completed = True
+    player_profile.save()
+
+    request.session.pop(f'situation_{situation_id}_line', None)
+
+    current_friends = player_profile.calculate_friends()
+    if player_profile.current_day >= 7:
+        return redirect('game_complete')
+
+    next_day = player_profile.current_day + 1
+    next_situation = Situations.objects.filter(day=next_day).first()
+
+    context = {
+        'situation': situation,
+        'next_situation': next_situation,
+        'current_day': player_profile.current_day,
+        'current_friends': current_friends,
+    }
+
+    return render(request, 'game/situation_complete.html', context)
