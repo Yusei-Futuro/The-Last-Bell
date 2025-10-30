@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .models import Username, Situations
+from .models import Username, Situations, History_Choice, NPCRelationship
 #Falta obligatoriamente el GameSave() importarlo aca
 
 # Create your views here.
@@ -51,6 +51,76 @@ def prologue(request): #Aca esta la parte del prologo del juego
 @login_required
 def load_game(request):#Aca va el load game del juego
     return HttpResponse("Hello word")
+
+@login_required
+def play_situations(request, situation_id):
+
+    user=request.user.Username
+    situation=get_object_or_404(Situations, id=situation_id)
+
+    dialogue=situation.dialogue.all().orden.by("orden")
+    current_line_index = request.session.get(f'situation_{situation_id}_line', 0)
+
+    if current_line_index >= dialogue.count():
+
+        return redirect('situation_complete', situation_id=situation_id)
+
+    current_line = dialogue[current_line_index]
+    # Si es punto de decisión, mostrar opciones
+    if current_line.is_decision_point:
+        choices = current_line.choices.all().order_by('order')
+
+        context = {
+            'situation': situation,
+            'dialogue_line': current_line,
+            'choices': choices,
+            'is_decision_point': True,
+        }
+
+        return render(request, 'game/situation.html', context)
+
+    context = {
+        'situation': situation,
+        'dialogue_line': current_line,
+        'is_decision_point': False,
+    }
+
+    request.session[f'situation_{situation_id}_line'] = current_line_index + 1
+
+    return render(request, 'game/situation.html', context)
+
+@login_required
+def make_choice(request, choice_id):
+    if request.method != 'POST':
+        return redirect('main_menu')
+
+    player_profile = request.user.Username
+    choice = get_object_or_404(Username, id=choice_id)
+    situation = choice.dialogue.situation
+    npc = situation.main_character
+    relationship, created = NPCRelationship.objects.get_or_create(
+        player=player_profile,
+        character=npc
+    )
+    relationship.update_friendship(choice.friendship_points)
+    History_Choice.objects.create(
+        player=player_profile,
+        choice=choice,
+        situation=situation,
+        day=player_profile.current_day,
+        points_earned=choice.friendship_points
+    )
+
+    player_profile.total_friendship_score += choice.friendship_points
+    player_profile.save()
+
+    # Crear autosave
+
+    if choice.next_dialogue:
+        next_index = choice.next_dialogue.order
+        request.session[f'situation_{situation.id}_line'] = next_index
+
+    return redirect('play_situation', situation_id=situation.id)
 
 def main(request):
     return render(request, "main_base.html")
@@ -101,26 +171,5 @@ def singin(request):
             login(request, user)
             return redirect("/main/")
 
-def dialogue_view(request, dialogue_id):
-    dialogue = get_object_or_404(Dialogue, pk=dialogue_id)
-    choices = dialogue.choices.all() if dialogue.decision_point else []
-    return render(request, 'game.html', {
-        'dialogue': dialogue,
-        'choices': choices
-    })
-
-def choice_view(request, choice_id):
-    choice = get_object_or_404(Choice, pk=choice_id)
-
-    # Actualizar puntos de amistad
-    request.session['friendship'] = request.session.get('friendship', 0)
-    request.session['friendship'] += choice.friendship_points
-
-    # Ir al siguiente diálogo automáticamente
-    if choice.next_dialogue:
-        return redirect('dialogue_view', dialogue_id=choice.next_dialogue.id)
-    else:
-        # Si no hay siguiente diálogo, ir al menú principal
-        return redirect('main')  # Aquí 'main' es tu ruta del menú principal
 
 

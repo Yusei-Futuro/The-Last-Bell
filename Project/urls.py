@@ -14,9 +14,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
-from TBL.views import sign, dialogue_view, choice_view, main, main_game, logo_out, singin
+from TBL.views import sign, main, main_game, logo_out, singin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,10 +26,4 @@ urlpatterns = [
     path("", main, name="main_player"),
     path("logout/", logo_out, name="logout"),
     path("singin/", singin, name="singin"),
-
-
-    #Parte del game
-    path("jugar/", dialogue_view, {'dialogue_id': 1}, name="start_level1"),
-    path('dialogue/<int:dialogue_id>/', dialogue_view, name='dialogue_view'),
-    path('choice/<int:choice_id>/', choice_view, name='choice_view'),
 ]
