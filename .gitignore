@@ -1,14 +1,17 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Django stuff:
+# Base de datos local
 db.sqlite3
-/staticfiles/
 
-TBL/migrations/__pycache__/
-TBL/migrations/*.pyc
+db_backup.sqlite3
 
-.idea/
+
+# Archivos Python compilados
+__pycache__/
+*.pyc
+
+# Entorno virtual
+venv/
+env/
+
+# Archivos de IDE
 .vscode/
+.idea/
