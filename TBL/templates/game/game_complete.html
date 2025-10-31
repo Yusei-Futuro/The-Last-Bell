@@ -1,0 +1,40 @@
+{% extends "game/base_game.html" %}
+
+{% block content %}
+<div class="game-complete text-center">
+    <h1>¡Juego Completado!</h1>
+    <p class="lead">Has completado los 7 días en el colegio</p>
+
+    <div class="results mt-5">
+        <h2>Total de Amigos Conseguidos: {{ friends_count }}/7</h2>
+
+        <div class="relationships mt-4">
+            <h3>Relaciones:</h3>
+            <div class="row">
+                {% for relationship in relationships %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ relationship.character.image_url }}" class="card-img-top" alt="{{ relationship.character.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ relationship.character.name }}</h5>
+                            <p class="card-text">
+                                {% if relationship.is_friend %}
+                                    ✅ ¡Son amigos!
+                                {% else %}
+                                    ❌ No son amigos aún
+                                {% endif %}
+                            </p>
+                            <!-- NO mostrar puntos exactos -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'main_menu' %}" class="btn btn-primary btn-lg mt-5">
+        Volver al Menú
+    </a>
+</div>
+{% endblock %}

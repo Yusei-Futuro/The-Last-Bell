@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .models import Username, Situations, History_Choice, NPCRelationship
+from .models import Username, Situations, History_Choice, NPCRelationship, Choice
 #Falta obligatoriamente el GameSave() importarlo aca
 
 # Create your views here.
@@ -80,7 +80,7 @@ def main_game(request):
 def new_game(request):
 
     #Funcion que reinicia los ajustes a predeterminados
-    user=request.user.Username
+    user=request.user
 
     user.day = 1
     user.situation_complet = False
@@ -91,7 +91,7 @@ def new_game(request):
 
     #Aca hay que poner GameSave pero la parte del juego seria eliminada el progreso anterior
 
-    return redirect("prologue")
+    return redirect("play_situation", situation_id=1)
 
 @login_required
 def prologue(request): #Aca esta la parte del prologo del juego
@@ -104,10 +104,10 @@ def load_game(request):#Aca va el load game del juego
 @login_required
 def play_situations(request, situation_id):
 
-    user=request.user.Username
+    user=request.user
     situation=get_object_or_404(Situations, id=situation_id)
 
-    dialogue=situation.dialogue.all().orden.by("orden")
+    dialogue=situation.dialogue_lines.all().order_by("order")
     current_line_index = request.session.get(f'situation_{situation_id}_line', 0)
 
     if current_line_index >= dialogue.count():
@@ -116,7 +116,7 @@ def play_situations(request, situation_id):
 
     current_line = dialogue[current_line_index]
     # Si es punto de decisión, mostrar opciones
-    if current_line.is_decision_point:
+    if current_line.decision_point:
         choices = current_line.choices.all().order_by('order')
 
         context = {
@@ -143,10 +143,10 @@ def make_choice(request, choice_id):
     if request.method != 'POST':
         return redirect('main_menu')
 
-    player_profile = request.user.Username
-    choice = get_object_or_404(Username, id=choice_id)
+    player_profile = request.user.username
+    choice = get_object_or_404(Choice, id=choice_id)
     situation = choice.dialogue.situation
-    npc = situation.main_character
+    npc = situation.character
     relationship, created = NPCRelationship.objects.get_or_create(
         player=player_profile,
         character=npc
@@ -170,8 +170,6 @@ def make_choice(request, choice_id):
         request.session[f'situation_{situation.id}_line'] = next_index
 
     return redirect('play_situation', situation_id=situation.id)
-
-#Me faltan aca otras view que tengo planeadas situation_complete, game_complete, continue_next_day
 
 @login_required
 def continue_to_next_day(request):

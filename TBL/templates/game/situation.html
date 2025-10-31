@@ -1,0 +1,62 @@
+{% extends "game/base_game.html" %}
+
+{% block content %}
+<div class="situation-screen">
+    <!-- Fondo de la locación -->
+    <div class="location-background"
+         style="background-image: url('{{ situation.location.image_url }}')">
+    </div>
+
+    <!-- Contenedor de diálogo -->
+    <div class="dialogue-box">
+        <!-- Personaje (si aplica) -->
+        {% if dialogue_line.character %}
+        <div class="character-sprite">
+            <img src="{{ dialogue_line.character.image_url }}" alt="{{ dialogue_line.character.name }}">
+        </div>
+        {% endif %}
+
+        <!-- Nombre del que habla -->
+        <div class="speaker-name">
+            {% if dialogue_line.line_type == 'came_thought' %}
+                <em>Came (pensamiento)</em>
+            {% elif dialogue_line.line_type == 'came_speech' %}
+                Came
+            {% elif dialogue_line.line_type == 'npc_speech' %}
+                {{ dialogue_line.character.name }}
+            {% elif dialogue_line.line_type == 'narration' %}
+                <em>Narración</em>
+            {% endif %}
+        </div>
+
+        <!-- Texto del diálogo -->
+        <div class="dialogue-text {% if dialogue_line.line_type == 'came_thought' %}thought-text{% endif %}">
+            {{ dialogue_line.text }}
+        </div>
+
+        <!-- Opciones de decisión -->
+        {% if is_decision_point %}
+        <div class="choices mt-4">
+            <p class="text-center"><strong>¿Qué haces?</strong></p>
+            <form method="POST">
+                {% csrf_token %}
+                {% for choice in choices %}
+                <button type="submit"
+                        formaction="{% url 'make_choice' choice.id %}"
+                        class="btn btn-outline-primary btn-block mb-2">
+                    {{ choice.choice_text }}
+                </button>
+                {% endfor %}
+            </form>
+        </div>
+        {% else %}
+        <!-- Botón para continuar -->
+        <div class="text-end mt-3">
+            <button onclick="location.reload()" class="btn btn-primary">
+                Continuar →
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
