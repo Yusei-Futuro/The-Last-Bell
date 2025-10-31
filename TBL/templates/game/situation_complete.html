@@ -1,0 +1,30 @@
+{% extends "game/base_game.html" %}
+
+{% block content %}
+<div class="day-complete text-center">
+    <h1>Día {{ current_day }} Completado</h1>
+
+    <div class="results mt-5">
+        <h2>Amigos hasta ahora: {{ current_friends }}/7</h2>
+
+        <p class="lead mt-4">
+            {% if current_day < 7 %}
+                Has completado la situación del día {{ current_day }}.
+                ¿Listo para continuar al Día {{ current_day|add:1 }}?
+            {% else %}
+                ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
+            {% endif %}
+        </p>
+
+        {% if next_situation %}
+        <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
+            Continuar al Día {{ current_day|add:1 }}
+        </a>
+        {% else %}
+        <a href="{% url 'game_complete' %}" class="btn btn-success btn-lg mt-4">
+            Ver Resultados Finales
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
