@@ -10,5 +10,7 @@ def create_player_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_player_profile(sender, instance, **kwargs):
-
-    instance.Username.save()
+    try:
+        instance.Username.save()
+    except Username.DoesNotExist:
+        Username.objects.create(user=instance)

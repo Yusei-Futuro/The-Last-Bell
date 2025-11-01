@@ -1,6 +1,7 @@
 from random import choice
 from tkinter.constants import CASCADE
 from tkinter.font import names
+from django.utils import timezone
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -17,6 +18,10 @@ class Username(models.Model):
         max_length=50,
         default="Kove",
         help_text="Nombre a su jugador"
+    )
+    day=models.IntegerField(
+        default=0,
+        help_text="Dia en el que estoy"
     )
     select_conditions=models.CharField(
         max_length=50,
@@ -427,11 +432,87 @@ class NPCRelationship(models.Model):
 
     def update_friendship(self, points):
         self.friendship_points += points
-        self.is_friend = self.friendship_points >= self.character.friendship_threshold
+        self.is_friend = self.friendship_points >= self.character.is_friend
         self.interactions_count += 1
         from django.utils import timezone
         self.last_interaction = timezone.now()
         self.save()
 
+class GameSave(models.Model):
+
+    player = models.ForeignKey(
+        Username,
+        on_delete=models.CASCADE,
+        related_name='game_saves',
+        help_text="Perfil del jugador"
+    )
+
+    # Punto de guardado
+    current_situation = models.ForeignKey(
+        Situations,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="Situación actual en la que está el jugador"
+    )
+
+    current_dialogue_line = models.ForeignKey(
+        Dialogue,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="Última línea de diálogo mostrada"
+    )
+
+    # Metadatos del guardado
+    timestamp = models.DateTimeField(
+        auto_now=True,
+        help_text="Fecha y hora del guardado"
+    )
+
+    auto_save = models.BooleanField(
+        default=True,
+        help_text="Si fue guardado automáticamente o manual"
+    )
+
+    # Snapshot del estado del juego (para debugging)
+    game_state_snapshot = models.JSONField(
+        null=True,
+        blank=True,
+        help_text="Snapshot completo del estado del juego (útil para debugging)"
+    )
+
+    class Meta:
+        verbose_name = "Guardado de Partida"
+        verbose_name_plural = "Guardados de Partidas"
+        ordering = ['-timestamp']
+        get_latest_by = 'timestamp'
+
+    def __str__(self):
+        return f"{self.player.user.username} - {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
+
+    @classmethod
+    def create_autosave(cls, player_profile, situation, dialogue_line):
+
+        save = cls.objects.create(
+            player=player_profile,
+            current_situation=situation,
+            current_dialogue_line=dialogue_line,
+            auto_save=True,
+            game_state_snapshot={
+                'day': player_profile.current_day,
+                'situations_completed': player_profile.completed_situations_today,
+                'friends_count': player_profile.friends_count,
+            }
+        )
+
+        old_saves = cls.objects.filter(
+            player=player_profile
+        ).order_by('-timestamp')[5:]
+
+        for old_save in old_saves:
+            old_save.delete()
+
+        return save
 
 
