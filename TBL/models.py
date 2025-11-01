@@ -500,9 +500,9 @@ class GameSave(models.Model):
             current_dialogue_line=dialogue_line,
             auto_save=True,
             game_state_snapshot={
-                'day': player_profile.current_day,
-                'situations_completed': player_profile.completed_situations_today,
-                'friends_count': player_profile.friends_count,
+                'day': player_profile.day,
+                'situations_completed': player_profile.situation_complet,
+                'friends_count': player_profile.friend_counts,
             }
         )
 

@@ -171,10 +171,6 @@ def make_choice(request, choice_id):
     player_profile.friend += choice.friendship_points
     player_profile.save()
 
-    player_profile.total_friendship_score += choice.friendship_points
-    player_profile.save()
-
-    # Crear autosave
     GameSave.create_autosave(
         player_profile=player_profile,
         situation=situation,
@@ -185,14 +181,14 @@ def make_choice(request, choice_id):
         next_index = choice.next_dialogue.order
         request.session[f'situation_{situation.id}_line'] = next_index
 
-    return redirect('play_situation', situation_id=situation.id)
+    return redirect('play_situations', situation_id=situation.id)
 
 @login_required
 def continue_to_next_day(request):
     player_profile = request.user.Username
 
     player_profile.advance_to_next_day()
-    next_situation = Situations.objects.filter(day=player_profile.current_day).first()
+    next_situation = Situations.objects.filter(day=player_profile.day).first()
 
     if next_situation:
         return redirect('play_situation', situation_id=next_situation.id)
@@ -238,7 +234,7 @@ def situation_complete(request, situation_id):
     context = {
         'situation': situation,
         'next_situation': next_situation,
-        'current_day': player_profile.current_day,
+        'current_day': player_profile.day,
         'current_friends': current_friends,
     }
 
