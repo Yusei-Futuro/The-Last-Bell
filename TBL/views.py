@@ -166,7 +166,7 @@ def make_choice(request, choice_id):
         points_earned=choice.friendship_points
     )
 
-    player_profile.friend += choice.friendship_points
+    player_profile.friend_counts += choice.friendship_points
     player_profile.save()
 
     GameSave.create_autosave(
@@ -230,6 +230,8 @@ def situation_complete(request, situation_id):
 
     next_day = player_profile.day + 1
     next_situation = Situations.objects.filter(day=next_day).first()
+    player_profile.day = next_day
+    player_profile.save()
 
     context = {
         'situation': situation,

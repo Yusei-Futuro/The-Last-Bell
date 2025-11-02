@@ -40,7 +40,8 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Biblioteca Central",
             defaults={
-                "descriptions": "Una biblioteca grande y fuerte con muros y libros nada intimidantes para Came"
+                "descriptions": "Una biblioteca grande y fuerte con muros y libros nada intimidantes para Came",
+                "imagen_fondo": "game_locations/Libreria_escolar.jpg"
             },
         )
 
