@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .models import Username, Situations, History_Choice, NPCRelationship, Choice, GameSave
-#Falta obligatoriamente el GameSave() importarlo aca
 
 # Create your views here.
 
@@ -112,28 +111,25 @@ def load_game(request):#Aca va el load game del juego
 @login_required
 def play_situations(request, situation_id):
 
-    user=request.user.Username
-    situation=get_object_or_404(Situations, id=situation_id)
+    player_profile = request.user.Username
+    situation = get_object_or_404(Situations, id=situation_id)
 
-    dialogue=situation.dialogue_lines.all().order_by("order")
+    dialogue = situation.dialogue_lines.all().order_by("order")
     current_line_index = request.session.get(f'situation_{situation_id}_line', 0)
 
     if current_line_index >= dialogue.count():
-
         return redirect('situation_complete', situation_id=situation_id)
 
     current_line = dialogue[current_line_index]
-    # Si es punto de decisión, mostrar opciones
+
     if current_line.decision_point:
         choices = current_line.choices.all().order_by('order')
-
         context = {
             'situation': situation,
             'dialogue_line': current_line,
             'choices': choices,
             'is_decision_point': True,
         }
-
         return render(request, 'game/situation.html', context)
 
     context = {
@@ -160,6 +156,8 @@ def make_choice(request, choice_id):
         character=npc
     )
     relationship.update_friendship(choice.friendship_points)
+
+
     History_Choice.objects.create(
         player=player_profile,
         choice=choice,
@@ -174,14 +172,16 @@ def make_choice(request, choice_id):
     GameSave.create_autosave(
         player_profile=player_profile,
         situation=situation,
-        dialogue_line=choice.next_dialogue or choice.dialogue_line
+        dialogue_line=choice.next_dialogue or choice.dialogue
     )
 
     if choice.next_dialogue:
         next_index = choice.next_dialogue.order
         request.session[f'situation_{situation.id}_line'] = next_index
+    else:
+        request.session[f'situation_{situation.id}_line'] += 1
 
-    return redirect('play_situations', situation_id=situation.id)
+    return redirect('play_situation', situation_id=situation.id)
 
 @login_required
 def continue_to_next_day(request):

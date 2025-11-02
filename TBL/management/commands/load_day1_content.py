@@ -15,12 +15,13 @@ class Command(BaseCommand):
 
     def create_characters(self):
         Character.objects.get_or_create(
-            name="Kove",
+            name="Came",
             defaults={
                 "backstory": "Se mudó a una nueva ciudad recientemente...",
                 "interesting": "Leer y conocer nuevos lugares",
                 "personality": "Amable, un poco tímido",
-                "is_friend": 20
+                "is_friend": 20,
+                "image_url": "game_characters/Came.png"
             }
         )
 
@@ -30,7 +31,8 @@ class Command(BaseCommand):
                 "backstory": "Ama los libros y disfruta compartir su conocimiento",
                 "interesting": "Leer y recomendar libros",
                 "personality": "Paciente y observador",
-                "is_friend": 20
+                "is_friend": 20,
+                "image_url": "game_characters/Brad.png"
             }
         )
 

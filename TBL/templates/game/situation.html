@@ -1,4 +1,5 @@
 {% extends "game/base_game.html" %}
+{% load static %}
 
 {% block content %}
 <div class="situation-screen">
@@ -12,7 +13,7 @@
         <!-- Personaje (si aplica) -->
         {% if dialogue_line.character %}
         <div class="character-sprite">
-            <img src="{{ dialogue_line.character.image_url }}" alt="{{ dialogue_line.character.name }}">
+            <img src="{% static dialogue_line.character.image_url %}" alt="{{ dialogue_line.character.name }}">
         </div>
         {% endif %}
 
@@ -44,7 +45,7 @@
                 <button type="submit"
                         formaction="{% url 'make_choice' choice.id %}"
                         class="btn btn-outline-primary btn-block mb-2">
-                    {{ choice.choice_text }}
+                    {{ choice.text_choice }}
                 </button>
                 {% endfor %}
             </form>
