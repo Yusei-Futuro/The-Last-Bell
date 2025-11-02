@@ -89,7 +89,7 @@ def new_game(request):
     user.game_completed = False
     user.save()
 
-    #Aca hay que poner GameSave pero la parte del juego seria eliminada el progreso anterior
+    GameSave.objects.filter(player=user).delete()
 
     return redirect("play_situation", situation_id=1)
 

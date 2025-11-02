@@ -34,10 +34,11 @@ class Username(models.Model):
         ],
         help_text="Seleccione la condicion de su personaje (default:TEA)"
     )
-    situation=models.IntegerField(
+    situation_id=models.IntegerField(
         default=1,
         help_text="Primera situacion del game"
     )
+
     situation_complet=models.BooleanField(
         default=False,
         help_text="Cuando complete la sitaucion del primer dia"
@@ -62,7 +63,7 @@ class Username(models.Model):
         verbose_name_plural="Perfiles de jugadores"
 
     def __str__(self):
-        return f"{self.user.username} - Día {self.situation}"
+        return f"{self.user.username} - Día {self.situation_id}"
 
     def calculate_friends(self):
 
@@ -73,12 +74,12 @@ class Username(models.Model):
 
     def advance_to_next_day(self):
 
-        if self.situation_complet and self.situation < 7:
-            self.situation += 1
+        if self.situation_complet and self.situation_id < 7:
+            self.situation_id += 1
             self.situation_complet = False
             self.save()
 
-        elif self.situation >= 7:
+        elif self.situation_id >= 7:
             self.final = True
             self.save()
 
