@@ -38,7 +38,8 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Cafetería exterior",
             defaults={
-                "descriptions": "Una cafetería con mesas al aire libre, ambiente concurrido pero relajado"
+                "descriptions": "Una cafetería con mesas al aire libre, ambiente concurrido pero relajado",
+                "imagen_fondo": "game_locations/Cafeteria.jpg"
             }
         )
 
