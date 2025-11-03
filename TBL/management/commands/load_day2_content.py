@@ -37,7 +37,9 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Patio",
             defaults={
-                "descriptions":"Un Amplio Patio con na cancha de futbol y espacio para el recreo"},
+                "descriptions":"Un Amplio Patio con na cancha de futbol y espacio para el recreo",
+                "imagen_fondo": "game_locations/Cancha de futbol.jpg"}
+
         )
         
 
