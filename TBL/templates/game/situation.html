@@ -53,9 +53,15 @@
         {% else %}
         <!-- Botón para continuar -->
         <div class="text-end mt-3">
+            {% if is_last_dialogue %}
+            <a href="{% url 'situation_complete' situation.id %}" class="btn btn-success">
+                Completar Día →
+            </a>
+            {% else %}
             <button onclick="location.reload()" class="btn btn-primary">
                 Continuar →
             </button>
+            {% endif %}
         </div>
         {% endif %}
     </div>

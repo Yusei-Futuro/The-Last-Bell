@@ -1,8 +1,5 @@
 from random import choice
-from tkinter.constants import CASCADE
-from tkinter.font import names
 from django.utils import timezone
-
 from django.db import models
 from django.contrib.auth.models import User
 

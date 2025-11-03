@@ -1,15 +1,19 @@
-from tkinter import image_names
-
 from django.core.management.base import BaseCommand
 from TBL.models import Character, Location, Situations, Dialogue, Choice
 
 
 class Command(BaseCommand):
-    help = 'Carga el contenido del Día 1 desde dialogos.txt'
+    help = 'Carga el contenido del Prólogo'
+
+    def handle(self, *args, **kwargs):
+        self.create_characters()
+        self.create_locations()
+        self.create_situation()
+        self.stdout.write(self.style.SUCCESS('Contenido del Prólogo cargado exitosamente!'))
 
     def create_characters(self):
         Character.objects.get_or_create(
-            name="Kove",
+            name="Came",
             defaults={
                 "backstory": "Un chico que acaba de mudarse a una nueva ciudad junto a su madre.",
                 "interesting": "Le gusta jugar videojuegos hasta tarde.",
@@ -37,28 +41,31 @@ class Command(BaseCommand):
 
     def create_locations(self):
         Location.objects.get_or_create(
-            name="Casa de Kove",
+            locations="Casa de Came",
             defaults={
-                "description": "El nuevo hogar de Kove y su madre, aún lleno de cajas sin desempacar."
+                "descriptions": "El nuevo hogar de Kove y su madre, aún lleno de cajas sin desempacar."
             }
         )
 
         Location.objects.get_or_create(
-            name="Colegio",
+            locations="Colegio",
             defaults={
-                "description": "Un gran edificio en la ciudad, donde Kove comenzará una nueva etapa escolar."
+                "descriptions": "Un gran edificio en la ciudad, donde Kove comenzará una nueva etapa escolar."
             }
         )
+
     def create_situation(self):
-# Primera parte del prólogo
-        location_casa = Location.objects.get(name="Casa de Kove")
-        location_colegio = Location.objects.get(name="Colegio")
+        # Primera parte del prólogo
+        location_casa = Location.objects.get(locations="Casa de Came")
+        location_colegio = Location.objects.get(locations="Colegio")
+        kove = Character.objects.get(name="Came")
 
         situation1 = Situations.objects.create(
-            title="El comienzo de una nueva vida",
-            act="Acto 1: Day 1",
-            context="Primera parte del primer día de clases",
-            location=location_casa
+            day=0,
+            title="El comienzo - Parte 1",
+            locations=location_casa,
+            character=kove,
+            contexto_situation="Primera parte del primer día de clases"
         )
 
 # Diálogos
@@ -90,7 +97,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation1,
             line_type='came_speech',
-            character=Character.objects.get(name="Kove"),
+            character=Character.objects.get(name="Came"),
             text="¡Perdón mamá! Termino de comer altiro.",
             order=4,
             decision_point=False
@@ -108,7 +115,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation1,
             line_type='came_speech',
-            character=Character.objects.get(name="Kove"),
+            character=Character.objects.get(name="Came"),
             text="¡Sí mamá!",
             order=6,
             decision_point=False
@@ -117,23 +124,25 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation1,
             line_type='narration',
-            text="Kove baja corriendo las escaleras y sale apurado por la puerta, casi atragantándose con la comida.",
+            text="Came baja corriendo las escaleras y sale apurado por la puerta, casi atragantándose con la comida.",
             order=7,
             decision_point=False
         )
-         
-# Segunda parte del prólogo
+
+
+        # Segunda parte del prólogo
         situation2 = Situations.objects.create(
-            title="El comienzo de una nueva vida - Parte 2",
-            act="Acto 1: Day 1",
-            context="Segunda parte del primer día de clases",
-            location=location_colegio
+            day=0,
+            title="El comienzo - Parte 2",
+            locations=location_colegio,
+            character=kove,
+            contexto_situation="Segunda parte del primer día de clases"
         )
 
         Dialogue.objects.create(
             situation=situation2,
             line_type='narration',
-            text="Después de un largo acto de apertura, Kove entra a su nuevo salón de clases. Apenas escuchó lo importante, pero entendió que es un nuevo comienzo.",
+            text="Después de un largo acto de apertura, Came entra a su nuevo salón de clases. Apenas escuchó lo importante, pero entendió que es un nuevo comienzo.",
             order=1,
             decision_point=False
         )
@@ -141,7 +150,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation2,
             line_type='came_thought',
-            character=Character.objects.get(name="Kove"),
+            character=Character.objects.get(name="Came"),
             text="Ok, solo entro y saludo. Nadie tiene que saber que soy diferente.",
             order=2,
             decision_point=False
@@ -159,8 +168,8 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation2,
             line_type='came_speech',
-            character=Character.objects.get(name="Kove"),
-            text="Sí, me llamo Kove. ¿Cómo te llamas?",
+            character=Character.objects.get(name="Came"),
+            text="Sí, me llamo Came. ¿Cómo te llamas?",
             order=4,
             decision_point=False
         )
@@ -177,7 +186,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation2,
             line_type='came_speech',
-            character=Character.objects.get(name="Kove"),
+            character=Character.objects.get(name="Came"),
             text="Gracias, mucho gusto.",
             order=6,
             decision_point=False
@@ -186,7 +195,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation2,
             line_type='came_thought',
-            character=Character.objects.get(name="Kove"),
+            character=Character.objects.get(name="Came"),
             text="Vale... un poco más y entro. Respira... respira...",
             order=7,
             decision_point=False

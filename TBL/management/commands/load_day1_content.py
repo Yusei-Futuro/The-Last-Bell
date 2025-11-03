@@ -1,5 +1,3 @@
-from tkinter import image_names
-
 from django.core.management.base import BaseCommand
 from TBL.models import Character, Location, Situations, Dialogue, Choice
 
@@ -21,7 +19,7 @@ class Command(BaseCommand):
                 "interesting": "Leer y conocer nuevos lugares",
                 "personality": "Amable, un poco tímido",
                 "is_friend": 20,
-                "image_url": "game_characters/Came.png"
+                "image_url": "game_characters/player.png"
             }
         )
 
@@ -32,7 +30,7 @@ class Command(BaseCommand):
                 "interesting": "Leer y recomendar libros",
                 "personality": "Paciente y observador",
                 "is_friend": 20,
-                "image_url": "game_characters/Brad.png"
+                "image_url": "game_characters/npc-1.png"
             }
         )
 
@@ -46,25 +44,27 @@ class Command(BaseCommand):
         )
 
     def create_situation(self):
-        bibliotecario = Character.objects.get(name="Bibliotecario Zu")
+        came = Character.objects.get(name="Came")
+        npc = Character.objects.get(name="Bibliotecario Zu")
         biblioteca = Location.objects.get(locations="Biblioteca Central")
 
         situation = Situations.objects.create(
             day=1,
             title="Conflicto por el libro",
             locations=biblioteca,
-            character=bibliotecario,
+            character=npc,
             contexto_situation="Came busca un libro de fantasía pero alguien más lo quiere también."
         )
 
         line1 = Dialogue.objects.create(situation=situation, line_type='narration', text="Mmmm parece ser la biblioteca central de la escuela...", order=1, decision_point=False)
-        line2 = Dialogue.objects.create(situation=situation, line_type='came_thought', text="Me pregunto si tendrán la nueva edición de Las aventuras por monje chino por Japon", order=2, decision_point=False)
-        line3 = Dialogue.objects.create(situation=situation, line_type='came_thought', text="Me encantaría leer la nueva aventura de Sandra Martínez.", order=3, decision_point=False)
+        line2 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Me pregunto si tendrán la nueva edición de Las aventuras por monje chino por Japon", order=2, decision_point=False)
+        line3 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Me encantaría leer la nueva aventura de Sandra Martínez.", order=3, decision_point=False)
         line4 = Dialogue.objects.create(situation=situation, line_type='narration', text="Luego de un rato logra encontrar el libro, pero alguien más lo toma a la vez.", order=4, decision_point=False)
         line5 = Dialogue.objects.create(situation=situation, line_type='narration', text="Sus manos chocan sobre la portada del libro.", order=5, decision_point=False)
 
         line6 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type="npc_speech",
             text="¿Quién eres y por qué tocas mi libro?",
             order=6,
@@ -72,6 +72,7 @@ class Command(BaseCommand):
         )
         line7 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_speech',
             text="¿Tu libro? Yo lo vi primero, es mío este libro.",
             order=7,
@@ -88,7 +89,7 @@ class Command(BaseCommand):
         # Línea donde ocurre la decisión
         decision_line = Dialogue.objects.create(
             situation=situation,
-            character=bibliotecario,
+            character=npc,
             line_type='npc_speech',
             text="Disculpa mis modales, me llamo Zu y me gusta leer. Llevo mucho tiempo buscando este libro, salió hace poco y me emocioné un poco al verlo. ¿Crees poder disculparme?",
             order=9,
@@ -117,6 +118,7 @@ class Command(BaseCommand):
         # --- RUTA MALA ---
         line10 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_thought',
             text="Me estoy enojando bastante.",
             order=10,
@@ -124,6 +126,7 @@ class Command(BaseCommand):
         )
         line11 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_speech',
             text="No las acepto, no puedes quitarme mi libro. Es mío porque yo lo vi.",
             order=11,
@@ -138,6 +141,7 @@ class Command(BaseCommand):
         )
         line13 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type='npc_speech',
             text="Parece que no eres capaz de pensar en los demás. ¿Acaso crees que eres único en el mundo?",
             order=13,
@@ -145,74 +149,84 @@ class Command(BaseCommand):
         )
 
         # --- RUTA BUENA ---
+        # NOTA: Los orders empiezan en 20 para crear un gap y evitar solapamiento con ruta mala
         line14 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_thought',
             text="¿Será que este puede ser amigo mío? Respira… Me he comportado de mala manera, parece. Lo arreglaré.",
-            order=14,
+            order=20,
             decision_point=False
         )
         line15 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_speech',
             text="Sí, lo siento también es mi culpa por actuar así. Me comporté mal, lo lamento. Mi nombre es Came, un placer Zu.",
-            order=15,
+            order=21,
             decision_point=False
         )
         line16 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type='npc_speech',
             text="Ok Came, pareces alguien a quien le gusta mucho leer. ¿Lees mucho sobre este autor?",
-            order=16,
+            order=22,
             decision_point=False
         )
         line17 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_speech',
             text="¡Sí! Me encanta, lo leo todos los días. Mi historia favorita es *Las aventuras por monje chino por Japón* porque me encanta cuando pelea con la bestia al final de la trilogía. Es fascinante su manera de escribir, logra recrear en mi mente toda la batalla.",
-            order=17,
+            order=23,
             decision_point=False
         )
         line18 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type='npc_thought',
             text="Estoy seguro de que me acaban de hacer un gran spoiler.",
-            order=18,
+            order=24,
             decision_point=False
         )
         line19 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type='npc_thought',
             text="Voy a pedirle a ver si podemos leer juntos el libro.",
-            order=19,
+            order=25,
             decision_point=False
         )
         line20 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type='npc_speech',
             text="¿Te parece si lo leemos juntos alguna vez?",
-            order=20,
+            order=26,
             decision_point=False
         )
         line21 = Dialogue.objects.create(
             situation=situation,
+            character=came,
             line_type='came_speech',
             text="¿Y te gusta el segundo libro de la trilogía? Es fascinante porque trata de esto y lo otro…",
-            order=21,
+            order=27,
             decision_point=False
         )
         line22 = Dialogue.objects.create(
             situation=situation,
+            character=npc,
             line_type='npc_thought',
             text="Parece que no voy a poder detenerlo JAJAJA.",
-            order=22,
+            order=28,
             decision_point=False
         )
         line23 = Dialogue.objects.create(
             situation=situation,
             line_type='narration',
             text="Durante todo el recreo hablaron sobre la trilogía *Las aventuras por monje chino por Japón*. Zu habló poco, pero a Came le gustó sentirse escuchado por alguien que entendía sus gustos.",
-            order=23,
+            order=29,
             decision_point=False
         )
 

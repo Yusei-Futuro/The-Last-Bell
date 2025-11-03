@@ -1,5 +1,3 @@
-from tkinter.font import names
-
 from django.shortcuts import render , redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
@@ -91,7 +89,13 @@ def new_game(request):
 
     GameSave.objects.filter(player=user).delete()
 
-    return redirect("play_situation", situation_id=1)
+    # Buscar la primera situación del día 1 dinámicamente
+    first_situation = Situations.objects.filter(day=1).first()
+    if not first_situation:
+        # Si no hay situación para el día 1, redirigir al menú principal
+        return redirect("main_game")
+
+    return redirect("play_situation", situation_id=first_situation.id)
 
 @login_required
 def prologue(request): #Aca esta la parte del prologo del juego
@@ -114,14 +118,25 @@ def play_situations(request, situation_id):
     player_profile = request.user.Username
     situation = get_object_or_404(Situations, id=situation_id)
 
-    dialogue = situation.dialogue_lines.all().order_by("order")
-    current_line_index = request.session.get(f'situation_{situation_id}_line', 0)
+    # Obtener el ID del diálogo actual desde la sesión
+    current_dialogue_id = request.session.get(f'situation_{situation_id}_dialogue_id', None)
+    branch_start_order = request.session.get(f'situation_{situation_id}_branch_start', None)
 
-    if current_line_index >= dialogue.count():
-        return redirect('situation_complete', situation_id=situation_id)
+    # Si no hay diálogo actual, empezar con el primero de la situación
+    if current_dialogue_id is None:
+        # Obtener el primer diálogo (order más bajo)
+        current_line = situation.dialogue_lines.order_by('order').first()
+        if not current_line:
+            return redirect('situation_complete', situation_id=situation_id)
+    else:
+        # Obtener el diálogo actual por ID
+        from .models import Dialogue
+        try:
+            current_line = Dialogue.objects.get(id=current_dialogue_id, situation=situation)
+        except Dialogue.DoesNotExist:
+            return redirect('situation_complete', situation_id=situation_id)
 
-    current_line = dialogue[current_line_index]
-
+    # Si es un punto de decisión, mostrar las opciones
     if current_line.decision_point:
         choices = current_line.choices.all().order_by('order')
         context = {
@@ -132,15 +147,54 @@ def play_situations(request, situation_id):
         }
         return render(request, 'game/situation.html', context)
 
+    # Calcular el siguiente diálogo para el botón "Continuar"
+    next_dialogue = _get_next_dialogue(current_line, situation, branch_start_order)
+
+    if next_dialogue:
+        # Guardar el ID del siguiente diálogo en la sesión
+        request.session[f'situation_{situation_id}_dialogue_id'] = next_dialogue.id
+        is_last_dialogue = False
+    else:
+        # No hay más diálogos, limpiar la sesión
+        request.session[f'situation_{situation_id}_dialogue_id'] = None
+        is_last_dialogue = True
+
     context = {
         'situation': situation,
         'dialogue_line': current_line,
         'is_decision_point': False,
+        'is_last_dialogue': is_last_dialogue,
     }
 
-    request.session[f'situation_{situation_id}_line'] = current_line_index + 1
-
     return render(request, 'game/situation.html', context)
+
+
+def _get_next_dialogue(current_dialogue, situation, branch_start_order=None):
+    """
+    Determina el siguiente diálogo en la secuencia.
+
+    - Si estamos en una rama específica (branch_start_order no es None),
+      solo acepta diálogos EXACTAMENTE consecutivos (order + 1)
+    - Cualquier salto (incluso de 1) después de una decisión termina la rama
+    - Busca el siguiente diálogo por order
+    """
+    # Buscar el siguiente diálogo inmediato por order
+    next_dialogue = situation.dialogue_lines.filter(
+        order__gt=current_dialogue.order
+    ).order_by('order').first()
+
+    if not next_dialogue:
+        return None
+
+    # Si estamos en una rama específica (después de una decisión)
+    if branch_start_order is not None:
+        # Verificar que el siguiente diálogo sea EXACTAMENTE consecutivo
+        # Esto evita saltar a otra rama
+        if next_dialogue.order != current_dialogue.order + 1:
+            # No es consecutivo, fin de la rama
+            return None
+
+    return next_dialogue
 
 @login_required
 def make_choice(request, choice_id):
@@ -169,17 +223,26 @@ def make_choice(request, choice_id):
     player_profile.friend_counts += choice.friendship_points
     player_profile.save()
 
+    # Determinar el siguiente diálogo
+    if choice.next_dialogue:
+        next_dialogue = choice.next_dialogue
+        # Guardar el ID del siguiente diálogo
+        request.session[f'situation_{situation.id}_dialogue_id'] = next_dialogue.id
+        # Guardar el order de inicio de la rama para filtrar correctamente
+        request.session[f'situation_{situation.id}_branch_start'] = next_dialogue.order
+    else:
+        # Si no hay next_dialogue definido, avanzar al siguiente por order
+        next_dialogue = _get_next_dialogue(choice.dialogue, situation, None)
+        if next_dialogue:
+            request.session[f'situation_{situation.id}_dialogue_id'] = next_dialogue.id
+        else:
+            request.session[f'situation_{situation.id}_dialogue_id'] = None
+
     GameSave.create_autosave(
         player_profile=player_profile,
         situation=situation,
-        dialogue_line=choice.next_dialogue or choice.dialogue
+        dialogue_line=next_dialogue or choice.dialogue
     )
-
-    if choice.next_dialogue:
-        next_index = choice.next_dialogue.order
-        request.session[f'situation_{situation.id}_line'] = next_index
-    else:
-        request.session[f'situation_{situation.id}_line'] += 1
 
     return redirect('play_situation', situation_id=situation.id)
 
@@ -219,9 +282,13 @@ def situation_complete(request, situation_id):
     player_profile = request.user.Username
     situation = get_object_or_404(Situations, id=situation_id)
 
-    player_profile.current_situation_completed = True
+    player_profile.situation_complet = True
     player_profile.save()
 
+    # Limpiar las variables de sesión de la situación
+    request.session.pop(f'situation_{situation_id}_dialogue_id', None)
+    request.session.pop(f'situation_{situation_id}_branch_start', None)
+    # Mantener compatibilidad con el sistema antiguo
     request.session.pop(f'situation_{situation_id}_line', None)
 
     current_friends = player_profile.calculate_friends()
@@ -232,6 +299,15 @@ def situation_complete(request, situation_id):
     next_situation = Situations.objects.filter(day=next_day).first()
     player_profile.day = next_day
     player_profile.save()
+
+    # Crear un autosave apuntando al inicio del siguiente día
+    if next_situation:
+        first_dialogue = next_situation.dialogue_lines.order_by('order').first()
+        GameSave.create_autosave(
+            player_profile=player_profile,
+            situation=next_situation,
+            dialogue_line=first_dialogue
+        )
 
     context = {
         'situation': situation,
