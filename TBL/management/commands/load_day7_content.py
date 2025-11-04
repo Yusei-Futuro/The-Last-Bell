@@ -37,7 +37,8 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Sala de estudio",
             defaults={
-                "descriptions": "Una sala tranquila con mesas y libros para estudiar"
+                "descriptions": "Una sala tranquila con mesas y libros para estudiar",
+                "imagen_fondo": "game_locations/sala de estudio.jpg"
             }
         )
 

@@ -37,7 +37,8 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Banca exterior",
             defaults={
-                "descriptions": "Una banca en el patio, rodeada de árboles y otras personas estudiando."
+                "descriptions": "Una banca en el patio, rodeada de árboles y otras personas estudiando.",
+                "imagen_fondo": "game_locations/banco parque.jpg"
             }
         )
 

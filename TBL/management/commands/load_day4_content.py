@@ -36,7 +36,8 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Plaza",
             defaults={
-                "descriptions": "Un lugar abierto con áreas verdes, personas conversando y jugando alrededor."
+                "descriptions": "Un lugar abierto con áreas verdes, personas conversando y jugando alrededor.",
+                "imagen_fondo": "game_locations/plaza.jpg"
             }
         )
 

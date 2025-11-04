@@ -36,7 +36,9 @@ class Command(BaseCommand):
     def create_locations(self):
         Location.objects.get_or_create(
             locations="Gimnasio",
-            defaults={"descriptions": "Gimnasio escolar con canchas y espacio para acrosport."}
+            defaults={
+                "descriptions": "Gimnasio escolar con canchas y espacio para acrosport.",
+                "imagen_fondo": "game_locations/gimnasio escolar.jpg"}
         )
 
     def create_situation(self):
