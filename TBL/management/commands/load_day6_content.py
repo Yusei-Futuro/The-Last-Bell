@@ -38,7 +38,7 @@ class Command(BaseCommand):
             locations="Gimnasio",
             defaults={
                 "descriptions": "Gimnasio escolar con canchas y espacio para acrosport.",
-                "imagen_fondo": "game_locations/gimnasio escolar.jpg"}
+                "imagen_fondo": "game_locations/gimnasio.jpg"}
         )
 
     def create_situation(self):

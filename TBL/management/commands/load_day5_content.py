@@ -38,7 +38,7 @@ class Command(BaseCommand):
             locations="Banca exterior",
             defaults={
                 "descriptions": "Una banca en el patio, rodeada de árboles y otras personas estudiando.",
-                "imagen_fondo": "game_locations/banco parque.jpg"
+                "imagen_fondo": "game_locations/parque.jpg"
             }
         )
 
