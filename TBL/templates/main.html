@@ -9,43 +9,6 @@
 {% load static %}
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="#">The Last Bell</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a href="/" class="nav-link">Main</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a href="/logout" class="nav-link">Logout</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a href="/singup" class="nav-link">Singup</a>
-            </li>
-            <li class="nav-item">
-                <a href="/singin" class="nav-link">Singin</a>
-            </li>
-            {% endif %}
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-            <div class="text-center">
-                <img src="{% static "Logotipo.jpg" %}";
-                    style="width: 75px;" alt="logo">
-            </div>
-        </div>
-      </div>
-    </nav>
-
-
     {% block content %}
 
     {% endblock %}

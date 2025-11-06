@@ -15,10 +15,10 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    Día: {{ request.user.username.day }}/7
+                    Día: {{ request.user.Username.day }}/7
                 </div>
                 <div class="col text-end">
-                    {% if request.user.username.situation_complet %}
+                    {% if request.user.Username.situation_complet %}
                     ✅ Situación completada
                     {% else %}
                     🎮 En progreso
