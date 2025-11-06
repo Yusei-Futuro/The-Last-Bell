@@ -23,7 +23,7 @@
                 {% for relationship in relationships %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img src="{{ game_characters.image_url }}" class="card-img-top" alt="{{ relationship.character.name }}">
+                        <img src="{% static relationship.character.image_url %}" class="card-img-top" alt="{{ relationship.character.name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ relationship.character.name }}</h5>
                             <p class="card-text">

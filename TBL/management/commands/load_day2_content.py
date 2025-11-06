@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 "interesting": "Jugar y enseñar futbol",
                 "personality": "Amistoso y motivador",
                 "is_friend": 20,
-                "image_url": "game_characters/npc-2.png"
+                "image_url": "game_characters/Brad.png"
             }
         )
 
@@ -60,7 +60,7 @@ class Command(BaseCommand):
         line2 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Es un patio muy amplio, veré qué están jugando.", order=2, decision_point=False)
         line3 = Dialogue.objects.create(situation=situation, line_type='narration', text="De repente, un balón viene hacia él y logra esquivarlo.", order=3, decision_point=False)
         line4 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="¡Wow! eso estuvo cerca, ¿Quién tiró ese balón?", order=4, decision_point=False)
-        line5 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Disculpame, no fue mi intención asustarte, soy Compa. ¿Quieres jugar un partido? Ya tenemos un grupo.", order=5, decision_point=False)
+        line5 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Disculpame, no fue mi intención asustarte, soy Brad. ¿Quieres jugar un partido? Ya tenemos un grupo.", order=5, decision_point=False)
 
         decision_line = Dialogue.objects.create(
             situation=situation,
@@ -132,7 +132,7 @@ class Command(BaseCommand):
             situation=situation,
             character=npc,
             line_type='npc_speech',
-            text="¡Perfecto Came! Yo soy Compa, vamos a organizar los equipos.",
+            text="¡Perfecto Came! vamos a organizar los equipos.",
             order=22,
             decision_point=False
         )
