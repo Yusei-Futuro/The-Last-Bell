@@ -1,7 +1,16 @@
 {% extends "game/base_game.html" %}
+{% load static %}
 
 {% block content %}
-<div class="game-complete text-center">
+
+<section class="h-100 gradient-form" style="background-image: url('{% static "maininicial.jpg" %}');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    min-height: 100vh;
+                    width: 100%;
+">
+<div class="game-complete text-center" style="margin-top: 42px">
     <h1>¡Juego Completado!</h1>
     <p class="lead">Has completado los 7 días en el colegio</p>
 
@@ -14,7 +23,7 @@
                 {% for relationship in relationships %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img src="{{ relationship.character.image_url }}" class="card-img-top" alt="{{ relationship.character.name }}">
+                        <img src="{{ game_characters.image_url }}" class="card-img-top" alt="{{ relationship.character.name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ relationship.character.name }}</h5>
                             <p class="card-text">
@@ -37,4 +46,5 @@
         Volver al Menú
     </a>
 </div>
+</section>
 {% endblock %}

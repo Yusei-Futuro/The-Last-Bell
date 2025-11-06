@@ -1,7 +1,17 @@
 {% extends "game/base_game.html" %}
+{% load static %}
 
 {% block content %}
-<div class="day-complete text-center">
+
+<section class="h-100 gradient-form" style="background-image: url('{% static "maininicial.jpg" %}');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    min-height: 100vh;
+                    width: 100%;
+">
+
+<div class="day-complete text-center" style="margin-top: 42px">
     <h1>Día {{ current_day|add:-1 }} Completado</h1>
 
     <div class="results mt-5">
@@ -27,4 +37,5 @@
         {% endif %}
     </div>
 </div>
+</section>
 {% endblock %}

@@ -2,18 +2,18 @@
 {% load static %}
 {% block content %}
 
-<section class="h-100 gradient-form" style="background-image: url('{% static "maingameprueba.jpg" %}');
+<section class="h-100 gradient-form" style="background-image: url('{% static "maininicial.jpg" %}');
                     background-size: cover;
                     background-position: center;
                     background-repeat: no-repeat;
                     min-height: 100vh;
                     width: 100%;
 ">
-    <div class="main-menu text-center">
+    <div class="main-menu text-center" style="margin-top: 42px">
     <h1 class="game-title">The Last Bell</h1>
     <p class="game-subtitle">Un juego sobre inclusión y empatía</p>
 
-    <div class="menu-options mt-5">
+    <div class="menu-options  d-flex flex-column align-items-center"">
         {% if has_saved_game %}
         <a href="{% url 'load_game' %}" class="btn btn-primary btn-lg mb-3">
             Continuar Partida
@@ -21,7 +21,7 @@
         </a>
         {% endif %}
 
-        <a href="{% url 'new_game' %}" class="btn btn-success btn-lg mb-3">
+        <a href="{% url 'new_game' %}" class="btn btn-primary btn-lg mb-3">
             Nueva Partida
         </a>
 

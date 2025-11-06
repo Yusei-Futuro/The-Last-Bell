@@ -13,7 +13,7 @@
         <!-- Personaje (si aplica) -->
         {% if dialogue_line.character %}
         <div class="character-sprite">
-            <img src="{% static dialogue_line.character.image_url %}" alt="{{ dialogue_line.character.name }}">
+            <img src="{% static dialogue_line.character.image_url %}" alt="{{ dialogue_line.character.name }}" style="margin-top: 50px">
         </div>
         {% endif %}
 

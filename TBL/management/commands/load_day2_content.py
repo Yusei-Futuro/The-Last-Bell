@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 "interesting": "Leer y conocer nuevos lugares",
                 "personality": "Amable, un poco tímido",
                 "is_friend": 20,
-                "image_url": "game_characters/player.png"
+                "image_url": "game_characters/protagonista.png"
             }
         )
 
