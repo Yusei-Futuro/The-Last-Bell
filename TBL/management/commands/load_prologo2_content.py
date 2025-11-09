@@ -16,7 +16,8 @@ class Command(BaseCommand):
             defaults={
                 "backstory": "Un chico que acaba de mudarse a una nueva ciudad junto a su madre.",
                 "interesting": "Le gusta jugar videojuegos hasta tarde.",
-                "personality": "Tranquilo, distraído, pero amable."
+                "personality": "Tranquilo, distraído, pero amable.",
+                "image_url": "game_characters/protagonista.png"
             }
         )
         Character.objects.get_or_create(
@@ -33,7 +34,8 @@ class Command(BaseCommand):
         Location.objects.get_or_create(
             locations="Colegio",
             defaults={
-                "descriptions": "Un gran edificio en la ciudad, donde Kove comenzará una nueva etapa escolar."
+                "descriptions": "Un gran edificio en la ciudad, donde Kove comenzará una nueva etapa escolar.",
+                "imagen_fondo": "game_locations/Salon.png"
             }
         )
 
