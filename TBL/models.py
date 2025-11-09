@@ -220,6 +220,12 @@ class Situations(models.Model):
         help_text="Lineas de dialogo del day"
     )
 
+    moraleja=models.TextField(
+        help_text="Para mostrar la moraleja de la situacion",
+        blank=True,
+        null=True
+    )
+
     class Meta:
         verbose_name = "Situación"
         verbose_name_plural = "Situaciones"

@@ -25,6 +25,15 @@
                 ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
             {% endif %}
         </p>
+        <div class="text-center" style="
+          background-color: rgba(255, 255, 255, 0.6);
+          color: black;
+          padding: 20px;
+          border-radius: 10px;
+          backdrop-filter: blur(4px);
+        ">
+        <div>
+            <p>{{ situation.moraleja }}</p>
 
         {% if next_situation %}
         <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
