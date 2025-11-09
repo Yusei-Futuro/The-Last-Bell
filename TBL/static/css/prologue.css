@@ -1,0 +1,38 @@
+.prologue-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.prologue-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.prologue-box {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.narration-text {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #333;
+}
+
+.dialogue-section {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.thought-text {
+    font-size: 1.1em;
+    color: #666;
+}
+</style>
+{% endblock %}

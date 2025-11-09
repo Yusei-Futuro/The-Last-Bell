@@ -1,0 +1,74 @@
+{% extends "game/base_game.html" %}
+
+{% block content %}
+<div class="prologue-screen">
+    <div class="prologue-content">
+
+        <div class="progress-indicator text-muted mb-3">
+            {{ current_index }} / {{ total_lines }}
+        </div>
+
+        <div class="prologue-box">
+            {% if prologue_line.content_type == 'narration' %}
+                <div class="narration-text">
+                    <p class="lead">{{ prologue_line.text }}</p>
+                </div>
+            {% elif prologue_line.content_type == 'dialogue' %}
+                <div class="dialogue-section">
+                    <strong>{{ prologue_line.character.name }}:</strong>
+                    <p>{{ prologue_line.text }}</p>
+                </div>
+            {% elif prologue_line.content_type == 'came_thought' %}
+                <div class="thought-text">
+                    <em><strong>Came (pensamiento):</strong> {{ prologue_line.text }}</em>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Botón para continuar -->
+        <div class="text-end mt-4">
+            <button onclick="location.reload()" class="btn btn-primary btn-lg">
+                Continuar →
+            </button>
+        </div>
+    </div>
+</div>
+<style>
+    .prologue-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .prologue-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+    }
+
+    .prologue-box {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .narration-text {
+        font-size: 1.2em;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .dialogue-section {
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+
+    .thought-text {
+        font-size: 1.1em;
+        color: #666;
+    }
+</style>
+{% endblock %}

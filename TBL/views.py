@@ -80,7 +80,7 @@ def new_game(request):
     #Funcion que reinicia los ajustes a predeterminados
     user=request.user.Username
 
-    user.day = 1
+    user.day = -1
     user.situation_complet = False
     user.friend = 0
     user.friends_count = 0
@@ -90,7 +90,7 @@ def new_game(request):
     GameSave.objects.filter(player=user).delete()
 
     # Buscar la primera situación del día 1 dinámicamente
-    first_situation = Situations.objects.filter(day=1).first()
+    first_situation = Situations.objects.filter(day=-1).first()
     if not first_situation:
         # Si no hay situación para el día 1, redirigir al menú principal
         return redirect("main_game")
@@ -99,7 +99,26 @@ def new_game(request):
 
 @login_required
 def prologue(request): #Aca esta la parte del prologo del juego
-    return HttpResponse("Hello word")
+
+    current_index = request.session.get('prologue_index', 0)
+
+    if current_index >= prologue_lines.count():
+        # Prólogo completado, ir al Día 1
+        request.session.pop('prologue_index', None)
+        first_situation = Situation.objects.get(day=1)
+        return redirect('play_situation', situation_id=first_situation.id)
+
+    current_line = prologue_lines[current_index]
+
+    request.session['prologue_index'] = current_index + 1
+
+    context = {
+        'prologue_line': current_line,
+        'total_lines': prologue_lines.count(),
+        'current_index': current_index + 1,
+    }
+
+    return render(request, 'game/prologue.html', context)
 
 @login_required
 def load_game(request):#Aca va el load game del juego
@@ -167,7 +186,6 @@ def play_situations(request, situation_id):
     }
 
     return render(request, 'game/situation.html', context)
-
 
 def _get_next_dialogue(current_dialogue, situation, branch_start_order=None):
     """
