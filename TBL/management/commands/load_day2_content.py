@@ -132,7 +132,7 @@ class Command(BaseCommand):
             situation=situation,
             character=npc,
             line_type='npc_speech',
-            text="¡Perfecto Came! vamos a organizar los equipos.",
+            text="¡Perfecto Came! Vamos a organizar los equipos.",
             order=22,
             decision_point=False
         )
@@ -184,7 +184,7 @@ class Command(BaseCommand):
         line19 = Dialogue.objects.create(
             situation=situation,
             line_type='narration',
-            text="Durante el partido, Came y Compa cooperan y marcan algunos goles.",
+            text="Durante el partido, Came y Brad cooperan y marcan algunos goles.",
             order=28,
             decision_point=False
         )

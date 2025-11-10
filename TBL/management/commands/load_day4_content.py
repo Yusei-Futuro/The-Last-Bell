@@ -37,7 +37,7 @@ class Command(BaseCommand):
             locations="Plaza",
             defaults={
                 "descriptions": "Un lugar abierto con áreas verdes, personas conversando y jugando alrededor.",
-                "imagen_fondo": "game_locations/plazax.jpg"
+                "imagen_fondo": "game_locations/plazitas.jpg"
             }
         )
 

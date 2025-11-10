@@ -38,7 +38,7 @@ class Command(BaseCommand):
             locations="Sala de estudio",
             defaults={
                 "descriptions": "Una sala tranquila con mesas y libros para estudiar",
-                "imagen_fondo": "game_locations/salaestudio.jpg"
+                "imagen_fondo": "game_locations/saladeestudios.jpg"
             }
         )
 
