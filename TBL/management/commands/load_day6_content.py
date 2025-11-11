@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 "interesting": "Acrosport y deportes de grupo",
                 "personality": "Sociable y motivador",
                 "is_friend": 20,
-                "image_url": "game_characters/npc-5.png"
+                "image_url": "game_characters/Leonardo.png"
             }
         )
 

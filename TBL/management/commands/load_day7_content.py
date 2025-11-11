@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 "interesting": "Filosofía y matemáticas",
                 "personality": "Inteligente, algo curiosa",
                 "is_friend": 20,
-                "image_url": "game_characters/npc-5.png"
+                "image_url": "game_characters/npc-4.png"
             }
         )
 

@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 "interesting": "Jugar ajedrez y estudiar partidas famosas",
                 "personality": "Amigable y paciente",
                 "is_friend": 20,
-                "image_url": "game_characters/npc-5.png"
+                "image_url": "game_characters/Sandro.png"
             }
         )
 

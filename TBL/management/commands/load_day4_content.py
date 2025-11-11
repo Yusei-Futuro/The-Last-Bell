@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 "interesting": "Tocar la batería",
                 "personality": "Sociable y simpática",
                 "is_friend": 20,
-                "image_url": "game_characters/npc-4.png"
+                "image_url": "game_characters/npc-5.png"
             }
         )
 
