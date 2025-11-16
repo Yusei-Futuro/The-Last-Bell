@@ -51,7 +51,8 @@ class Command(BaseCommand):
             title="Una conexión musical",
             locations=plaza,
             character=npc,
-            contexto_situation="Came está escuchando su música en una playlist de Spotify. A su alrededor hay personas conversando y jugando, hasta que alguien se le acerca."
+            contexto_situation="Came está escuchando su música en una playlist de Spotify. A su alrededor hay personas conversando y jugando, hasta que alguien se le acerca.",
+            moraleja="En el día cuatro came otra vez tiene la opción de abrirse con alguien nuevo y tiene la oportunidad de poder hacer un nuevo amigo pero deberá decidir si quiere compartir algo suyo, en este caso su playlist, o solo dejar la oportunidad pasar y quedarse en su zona de confort perdiendo la oportunidad de aprender algo nuevo de alguien mas que no sea el"
         )
 
         line1 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Esta música está muy buena", order=1, decision_point=False)

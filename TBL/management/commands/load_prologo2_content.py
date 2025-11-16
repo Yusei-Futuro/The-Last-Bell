@@ -25,7 +25,8 @@ class Command(BaseCommand):
             defaults={
                 "backstory": "Un compañero del nuevo colegio, amistoso y curioso.",
                 "interesting": "Siempre está dispuesto a hablar con los nuevos.",
-                "personality": "Extrovertido y optimista."
+                "personality": "Extrovertido y optimista.",
+                "image_url": "game_characters/Alex.png"
             }
         )
 
@@ -44,13 +45,15 @@ class Command(BaseCommand):
         location_casa = Location.objects.get(locations="Casa de Came")
         location_colegio = Location.objects.get(locations="Colegio")
         kove = Character.objects.get(name="Came")
+        alex= Character.objects.get(name="Álex")
 
         situation2 = Situations.objects.create(
             day=0,
             title="El comienzo - Parte 2",
             locations=location_colegio,
-            character=kove,
-            contexto_situation="Segunda parte del primer día de clases"
+            character=alex,
+            contexto_situation="Segunda parte del primer día de clases",
+            moraleja="Durante un leve tiempo, podemos observar la ansiedad social del personaje principal por los nuevos desafios y situaciones que se le estan por presentar siendo incapaz de pensar demasiado en lo que podria pasar"
         )
 
         Dialogue.objects.create(

@@ -27,7 +27,8 @@ class Command(BaseCommand):
             defaults={
                 "backstory": "La madre de Kove, cariñosa pero estricta con los horarios.",
                 "interesting": "Siempre prepara desayuno aunque Kove se despierte tarde.",
-                "personality": "Paciente pero práctica."
+                "personality": "Paciente pero práctica.",
+                "image_url": "game_characters/Mama.png"
             }
         )
 
@@ -44,12 +45,13 @@ class Command(BaseCommand):
         # Primera parte del prólogo
         location_casa = Location.objects.get(locations="Casa de Came")
         kove = Character.objects.get(name="Came")
+        mom=Character.objects.get(name="Madre")
 
         situation1 = Situations.objects.create(
             day=-1,
             title="El comienzo - Parte 1",
             locations=location_casa,
-            character=kove,
+            character=mom,
             contexto_situation="Primera parte del primer día de clases"
         )
 

@@ -52,7 +52,8 @@ class Command(BaseCommand):
             title="Una partida inesperada de ajedrez",
             locations=banca,
             character=came,
-            contexto_situation="Came está leyendo un libro de ajedrez en una banca cuando un desconocido se le acerca para interactuar."
+            contexto_situation="Came está leyendo un libro de ajedrez en una banca cuando un desconocido se le acerca para interactuar.",
+            moraleja="En el día cinco came encuentra alguien con un gusto compartido sobre el ajedrez y esta persona quiere jugar con él, y came elegirá si jugar con él sacando el tablero o simplemente mentir diciendo que no tiene un tablero dado que así no tendría que complicarse para socializar quedándose de nuevo en su zona de confort que aunque no le ayude a su objetivo de hacer más amigos lo hace sentir seguro"
         )
 
 # Diálogos introductorios

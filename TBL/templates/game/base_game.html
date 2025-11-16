@@ -15,7 +15,11 @@
         <div class="container">
             <div class="row">
                 <div class="col">
+                    {% if request.user.Username.day == -1 %}
+                    Dia: Prologo
+                    {% else %}
                     Día: {{ request.user.Username.day }}/7
+                    {% endif %}
                 </div>
                 <div class="col text-end">
                     {% if request.user.Username.situation_complet %}
