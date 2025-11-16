@@ -21,7 +21,7 @@ class Command(BaseCommand):
             }
         )
         Character.objects.get_or_create(
-            name="Álex",
+            name="Alex",
             defaults={
                 "backstory": "Un compañero del nuevo colegio, amistoso y curioso.",
                 "interesting": "Siempre está dispuesto a hablar con los nuevos.",
@@ -45,7 +45,7 @@ class Command(BaseCommand):
         location_casa = Location.objects.get(locations="Casa de Came")
         location_colegio = Location.objects.get(locations="Colegio")
         kove = Character.objects.get(name="Came")
-        alex= Character.objects.get(name="Álex")
+        alex= Character.objects.get(name="Alex")
 
         situation2 = Situations.objects.create(
             day=0,
@@ -76,7 +76,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation2,
             line_type='npc_speech',
-            character=Character.objects.get(name="Álex"),
+            character=Character.objects.get(name="Alex"),
             text="Hola, ¿tú también eres nuevo?",
             order=3,
             decision_point=False
@@ -94,7 +94,7 @@ class Command(BaseCommand):
         Dialogue.objects.create(
             situation=situation2,
             line_type='npc_speech',
-            character=Character.objects.get(name="Álex"),
+            character=Character.objects.get(name="Alex"),
             text="Me llamo Álex, mucho gusto.",
             order=5,
             decision_point=False
