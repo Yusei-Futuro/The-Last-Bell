@@ -13,35 +13,41 @@
 <body>
     <div class="game-hud">
         <div class="container">
-            <div class="row">
-                <audio id="audio1">
-                    <source src="{% static 'sounds/mix-audio.MP3' %}" type="audio/mpeg">
-                </audio>
-
-                <button id="playMusic" class="btn btn-primary">Reproducir Música</button>
-
-                <script>
-                document.getElementById("playMusic").addEventListener("click", function () {
-                    document.getElementById("audio1").play();
-                });
-                </script>
                 <div class="col">
                     {% if request.user.Username.day == -1 %}
                     Dia: Prologo
                     {% else %}
                     Día: {{ request.user.Username.day }}/7
                     {% endif %}
-                </div>
-                <div class="col text-end">
-                    {% if request.user.Username.situation_complet %}
-                    ✅ Situación completada
-                    {% else %}
-                    🎮 En progreso
-                    {% endif %}
+                    <div class="d-flex col text-end">
+                        <button>Menu</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <audio id="bgMusic" loop preload="auto">
+    <source src="{% static 'sounds/mix-audio.MP3' %}" type="audio/mpeg">
+    </audio>
+
+    <script>
+    let savedTime = localStorage.getItem("musicTime");
+
+    const audio = document.getElementById("bgMusic");
+
+    // cuando cargue la página, reanudar música desde tiempo guardado
+    audio.addEventListener("loadedmetadata", () => {
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+        audio.play();
+    });
+
+    setInterval(() => {
+        localStorage.setItem("musicTime", audio.currentTime);
+    }, 500);
+    </script>
+
 
     <main class="game-container">
         {% block content %}{% endblock %}
