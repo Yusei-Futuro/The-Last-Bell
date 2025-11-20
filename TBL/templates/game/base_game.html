@@ -14,6 +14,17 @@
     <div class="game-hud">
         <div class="container">
             <div class="row">
+                <audio id="audio1">
+                    <source src="{% static 'sounds/mix-audio.MP3' %}" type="audio/mpeg">
+                </audio>
+
+                <button id="playMusic" class="btn btn-primary">Reproducir Música</button>
+
+                <script>
+                document.getElementById("playMusic").addEventListener("click", function () {
+                    document.getElementById("audio1").play();
+                });
+                </script>
                 <div class="col">
                     {% if request.user.Username.day == -1 %}
                     Dia: Prologo
