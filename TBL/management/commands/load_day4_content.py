@@ -55,22 +55,22 @@ class Command(BaseCommand):
             moraleja="En el día cuatro came otra vez tiene la opción de abrirse con alguien nuevo y tiene la oportunidad de poder hacer un nuevo amigo pero deberá decidir si quiere compartir algo suyo, en este caso su playlist, o solo dejar la oportunidad pasar y quedarse en su zona de confort perdiendo la oportunidad de aprender algo nuevo de alguien mas que no sea el"
         )
 
-        line1 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Esta música está muy buena", order=1, decision_point=False)
-        line2 = Dialogue.objects.create(situation=situation, character=came, line_type='came_action', text="Le da like para tenerla guardada en la playlist", order=2, decision_point=False)
-        line3 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Hola, ¿qué tal? ¿Qué música escuchas?", order=3, decision_point=False)
-        line4 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="Holaaa, estoy escuchando rock alternativo, me gusta mucho ese tipo de música", order=4, decision_point=False)
-        line5 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="A propósito, me llamo Came", order=5, decision_point=False)
-        line6 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="A lo siento por no presentarme, me llamo Alicie", order=6, decision_point=False)
-        line7 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="A propósito, ¿tienes alguna banda favorita?", order=7, decision_point=False)
-        line8 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="Últimamente escucho mucho Tame Impala y Arctic Monkeys. ¿A ti qué te gusta?", order=8, decision_point=False)
-        line9 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Me gusta también ese tipo de rock, pero me atrae el rock español, por ejemplo Soda Stereo, Los Prisioneros, Los Tres, entre otros.", order=9, decision_point=False)
-        line10 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="¿Te gustaría que nos compartamos las playlists?", order=10, decision_point=False)
+        line1 = Dialogue.objects.create(situation=situation, character=came, line_type='npc_thought', text="Esta música está muy buena", order=1, decision_point=False)
+        line2 = Dialogue.objects.create(situation=situation, character=came, line_type='narration', text="Mientras la chica escucha musica, se le cae un audifono", order=2, decision_point=False)
+        line3 = Dialogue.objects.create(situation=situation, character=npc, line_type='came_speech', text="Oye disculpa, se te cayo el audifono", order=3, decision_point=False)
+        line4 = Dialogue.objects.create(situation=situation, character=came, line_type='narration', text="Came se apresura a recoger el audifono y se lo entrega", order=4, decision_point=False)
+        line5 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="Me llamo Came, aqui tienes", order=5, decision_point=False)
+        line6 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Muchas gracias fue justo en la mejor parte de la cancion, me llamo Alicie", order=6, decision_point=False)
+        line7 = Dialogue.objects.create(situation=situation, character=npc, line_type='came_speech', text="Si, ¿que te gusta escuchar?", order=7, decision_point=False)
+        line8 = Dialogue.objects.create(situation=situation, character=came, line_type='npc_speech', text="Últimamente escucho mucho Tame Impala y Arctic Monkeys. ¿A ti qué te gusta?", order=8, decision_point=False)
+        line9 = Dialogue.objects.create(situation=situation, character=npc, line_type='came_speech', text="Me gusta también ese tipo de rock, pero me atrae el rock español, por ejemplo Soda Stereo, Los Prisioneros, Los Tres, entre otros.", order=9, decision_point=False)
+        line10 = Dialogue.objects.create(situation=situation, character=npc, line_type='came_thought', text="Wow, Alicie tiene mis mismos gustos musicales que bueno por fin encuentro", order=10, decision_point=False)
 
         decision_line = Dialogue.objects.create(
             situation=situation,
             character=came,
-            line_type='came_speech',
-            text="Claro, no tengo problema. ¿Tocas instrumentos? Podríamos hacer un cover de alguna canción de un grupo que nos guste.",
+            line_type='npc_speech',
+            text="¿Te gustaría que nos compartamos las playlists?",
             order=11,
             decision_point=True
         )

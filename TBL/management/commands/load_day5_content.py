@@ -53,7 +53,7 @@ class Command(BaseCommand):
             locations=banca,
             character=came,
             contexto_situation="Came está leyendo un libro de ajedrez en una banca cuando un desconocido se le acerca para interactuar.",
-            moraleja="En el día cinco came encuentra alguien con un gusto compartido sobre el ajedrez y esta persona quiere jugar con él, y came elegirá si jugar con él sacando el tablero o simplemente mentir diciendo que no tiene un tablero dado que así no tendría que complicarse para socializar quedándose de nuevo en su zona de confort que aunque no le ayude a su objetivo de hacer más amigos lo hace sentir seguro"
+            moraleja="En el día cinco Came encuentra alguien con un gusto compartido sobre el ajedrez y esta persona quiere jugar con él, y came elegirá si jugar con él sacando el tablero o simplemente mentir diciendo que no tiene un tablero dado que así no tendría que complicarse para socializar quedándose de nuevo en su zona de confort que aunque no le ayude a su objetivo de hacer más amigos lo hace sentir seguro"
         )
 
 # Diálogos introductorios
@@ -63,19 +63,19 @@ class Command(BaseCommand):
         line4 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Hola, a mí también me gusta el ajedrez. ¿Hablamos de algunas tácticas?", order=4, decision_point=False)
         line5 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Ese libro que estás leyendo es muy bueno, a mí también me gustan los libros de ajedrez y las partidas de Bobby Fisher", order=5, decision_point=False)
         line6 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Mucho gusto, me llamo Sandro", order=6, decision_point=False)
-        line7 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Quién es esta persona, parece bastante amigable. Creo que igual que yo está interesado.", order=7, decision_point=False)
+        line7 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="¿Quién es esta persona?, parece bastante amigable. Creo que igual que yo está interesado.", order=7, decision_point=False)
         line8 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="Hola, soy Came", order=8, decision_point=False)
         line9 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="Estoy aprendiendo el Gambito de Rey", order=9, decision_point=False)
         line10 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Ese ataque es muy poderoso pero...", order=10, decision_point=False)
         line11 = Dialogue.objects.create(situation=situation, character=came, line_type='came_speech', text="Tiene demasiadas aperturas porque deja al Rey muy expuesto, pero si se juega bien te dejará en una posición ganadora al inicio", order=11, decision_point=False)
         line12 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="...", order=12, decision_point=False)
         line13 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Creo que me pasé", order=13, decision_point=False)
-        line14 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Eso es fascinante, es mi favorita. Te gustaría jugar algunas partidas pero no tenemos un tablero aquí...", order=14, decision_point=False)
+        line14 = Dialogue.objects.create(situation=situation, character=npc, line_type='npc_speech', text="Eso es fascinante, es mi favorita. Me gustaría jugar algunas partidas pero no tenemos un tablero aquí...", order=14, decision_point=False)
 
         decision_line = Dialogue.objects.create(
             situation=situation,
             character=npc,
-            line_type='npc_speech',
+            line_type='came_thought',
             text="¿Qué harás, Came?",
             order=15,
             decision_point=True
@@ -87,7 +87,7 @@ class Command(BaseCommand):
             situation=situation,
             character=came,
             line_type='came_speech',
-            text="Yo tengo un tablero.",
+            text="Ahi hay un tablero, cuando quieras",
             order=16,
             decision_point=False
         )
@@ -104,7 +104,7 @@ class Command(BaseCommand):
             situation=situation,
             character=npc,
             line_type='npc_speech',
-            text="Sandro se empieza a reír.",
+            text="JAJAJAJAJAJA",
             order=18,
             decision_point=False
         )
@@ -160,7 +160,7 @@ class Command(BaseCommand):
             dialogue=decision_line,
             text_choice="Decir que no tienes tablero",
             consequence="No tengo tablero en este lugar, lo siento mucho.",
-            friendship_points=-10,
+            friendship_points=-20,
             type_choice='mala',
             order=2,
             next_dialogue=line20
