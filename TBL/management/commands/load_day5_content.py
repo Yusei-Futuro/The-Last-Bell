@@ -53,7 +53,7 @@ class Command(BaseCommand):
             locations=banca,
             character=came,
             contexto_situation="Came está leyendo un libro de ajedrez en una banca cuando un desconocido se le acerca para interactuar.",
-            moraleja="En el día cinco Came encuentra alguien con un gusto compartido sobre el ajedrez y esta persona quiere jugar con él, y came elegirá si jugar con él sacando el tablero o simplemente mentir diciendo que no tiene un tablero dado que así no tendría que complicarse para socializar quedándose de nuevo en su zona de confort que aunque no le ayude a su objetivo de hacer más amigos lo hace sentir seguro"
+            moraleja="En el día cinco Came encuentra alguien con un gusto compartido sobre el ajedrez, interaccion que le lleva a confrontarse a ser capaz de comunicar sus gustos personales a otras personas sin limitarse nuevamente a su zona de confort, que a pesar de que lo hace sentir seguro no le ayuda a su objetivo de hacer más amigos"
         )
 
 # Diálogos introductorios
