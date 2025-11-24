@@ -54,7 +54,8 @@ class Command(BaseCommand):
             locations=cafeteria,
             character=npc,
             contexto_situation="Parece que para ser bastante popular está solita, podríamos intentar acompañarla. Creo que no me haría mal tener una amiga.",
-            moraleja="En el día tres también es una muestra de la importancia de la empatía en las relaciones sociales ya que debemos entender los gustos de cada persona y no solo quedarnos con lo que creemos nosotros, si somos considerados podemos formar una conversación de agrado mutuo y aprender de otras personas cosas nuevas que a la larga nos pueden servir, además de fortalecer la relación que se tiene con esa persona"
+            moraleja="En el día tres Came también es una muestra de la importancia de la empatía en las relaciones sociales ya que debemos entender los gustos de cada persona y no solo quedarnos con lo que creemos nosotros, si somos considerados podemos formar una conversación de agrado mutuo y aprender de otras personas cosas nuevas que a la larga nos pueden servir, además de fortalecer la relación que se tiene con esa persona",
+            audio="sounds/musicaleer.mp3"
         )
 
         line1 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Parece que todas las mesas están ocupadas, bueno buscaré el sitio más alejado posible.", order=1, decision_point=False)

@@ -220,6 +220,11 @@ class Situations(models.Model):
         help_text="Lineas de dialogo del day"
     )
 
+    audio=models.URLField(
+        default="sounds/mix-audio.MP3",
+        help_text="Campo para poner las URL de las situaciones"
+    )
+
     moraleja=models.TextField(
         help_text="Para mostrar la moraleja de la situacion",
         blank=True,

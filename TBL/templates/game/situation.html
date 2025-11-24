@@ -66,4 +66,24 @@
         {% endif %}
     </div>
 </div>
+
+<audio id="audio" loop preload="auto">
+    <source src="{% static situation.audio %}" type="audio/mpeg">
+    </audio>
+
+    <script>
+    let savedTime = localStorage.getItem("musicTime");
+    const audio = document.getElementById("audio");
+    audio.addEventListener("loadedmetadata", () => {
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+        audio.play();
+    });
+
+    setInterval(() => {
+        localStorage.setItem("musicTime", audio.currentTime);
+    }, 500);
+    </script>
+
 {% endblock %}

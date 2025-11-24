@@ -14,27 +14,67 @@
 <div class="day-complete text-center" style="margin-top: 42px">
 
     {% if current_day == 0 or current_day == -1 %}
-        <h1>Prologo</h1>
+        <h1>Has completado el Prologo</h1>
 
         <div class="results mt-5">
 
+            <div class="results mt-5">
+
+        <p class="lead mt-4">
+            Has completado una parte del Prólogo.
+            ¿Listo para continuar?
+        </p>
+            {% if next_situation %}
+                <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
+                    Continuar con el Prologo
+                </a>
+            {% endif %}
+        </div>
+
+    {% elif current_day|add:-1 == 0 %}
+            <h1>Prologo parte 2 Completado</h1>
+
+        <div class="results mt-5">
+
+            <h2>Amigos hasta ahora: {{ current_friends }}/7</h2>
+
             <p class="lead mt-4">
                 {% if current_day < 7 %}
-                    Has completado una parte del Prologo.
-                    ¿Listo para continuar?
+                    Has completado el prologo
+                    ¿Listo para continuar al Día {{ current_day }}?
                 {% else %}
                     ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
                 {% endif %}
             </p>
 
-            {% if next_situation %}
-                <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
-                    Continuar al Día {{ current_day }}
-                </a>
-            {% endif %}
+            <div class="text-center" style="
+              background-color: rgba(255, 255, 255, 0.6);
+              color: black;
+              padding: 20px;
+              border-radius: 10px;
+              backdrop-filter: blur(4px);
+            ">
+                <p>{{ situation.moraleja }}</p>
+            </div>
+            <div>
+                {% if next_situation %}
+                    {% if current_day == 0 %}
+                    <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
+                        Continuar al Día {{ current_day }}
+                    </a>
+                    {% else %}
+                    <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
+                        Continuar al Día {{ current_day }}
+                    </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'game_complete' %}" class="btn btn-success btn-lg mt-4">
+                        Ver Resultados Finales
+                    </a>
+                {% endif %}
+            </div>
 
         </div>
-
     {% else %}
 
         <h1>Día {{ current_day|add:-1 }} Completado</h1>
@@ -60,11 +100,18 @@
               backdrop-filter: blur(4px);
             ">
                 <p>{{ situation.moraleja }}</p>
-
+            </div>
+            <div>
                 {% if next_situation %}
+                    {% if current_day == 0 %}
                     <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
                         Continuar al Día {{ current_day }}
                     </a>
+                    {% else %}
+                    <a href="{% url 'continue_to_next_day' %}" class="btn btn-primary btn-lg mt-4">
+                        Continuar al Día {{ current_day }}
+                    </a>
+                    {% endif %}
                 {% else %}
                     <a href="{% url 'game_complete' %}" class="btn btn-success btn-lg mt-4">
                         Ver Resultados Finales

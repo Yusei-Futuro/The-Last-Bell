@@ -53,7 +53,8 @@ class Command(BaseCommand):
             locations=sala,
             character=npc,
             contexto_situation="Came va a estudiar y conoce a Isabela, una compañera que lo ayudará.",
-            moraleja="En el día siete se aplica tanto el manejo de la ira como la superación de la zona de confort al tener que socializar cuando uno está en una situación complicada pero si uno consigue sobrellevar el estrés, y logra aun así poder salir de su zona de confort al hablar y hacer algo que no estas acostumbrado hacer, como estudiar con alguien más, no solo se puede hacer un amigo sino que se puede superar el estrés y el problema más fácil"
+            moraleja="En el día siete se aplica tanto el manejo de la ira como la superación de la zona de confort al tener que socializar cuando uno está en una situación complicada pero si uno consigue sobrellevar el estrés, y logra aun así poder salir de su zona de confort al hablar y hacer algo que no estas acostumbrado hacer, como estudiar con alguien más, no solo se puede hacer un amigo sino que se puede superar el estrés y el problema más fácil",
+            audio="sounds/salaestudioar.mp3"
         )
 
 

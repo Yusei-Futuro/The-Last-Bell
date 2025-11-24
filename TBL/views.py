@@ -241,15 +241,11 @@ def make_choice(request, choice_id):
     player_profile.friend_counts += choice.friendship_points
     player_profile.save()
 
-    # Determinar el siguiente diálogo
     if choice.next_dialogue:
         next_dialogue = choice.next_dialogue
-        # Guardar el ID del siguiente diálogo
         request.session[f'situation_{situation.id}_dialogue_id'] = next_dialogue.id
-        # Guardar el order de inicio de la rama para filtrar correctamente
         request.session[f'situation_{situation.id}_branch_start'] = next_dialogue.order
     else:
-        # Si no hay next_dialogue definido, avanzar al siguiente por order
         next_dialogue = _get_next_dialogue(choice.dialogue, situation, None)
         if next_dialogue:
             request.session[f'situation_{situation.id}_dialogue_id'] = next_dialogue.id

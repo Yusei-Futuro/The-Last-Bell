@@ -15,38 +15,19 @@
         <div class="container">
                 <div class="col">
                     {% if request.user.Username.day == -1 %}
-                    Dia: Prologo
+                    Dia: Prologo parte 1
+                    {% elif request.user.Username.day == 0%}
+                    Dia: Prologo parte 2
                     {% else %}
                     Día: {{ request.user.Username.day }}/7
                     {% endif %}
-                    <div class="d-flex col text-end">
-                        <button>Menu</button>
-                    </div>
+                    <a href="{% url 'main_game' %}" class="btn btn-primary btn-sm position-absolute top-0 end-0 m-2">
+                        Volver al menu
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
-    <audio id="bgMusic" loop preload="auto">
-    <source src="{% static 'sounds/mix-audio.MP3' %}" type="audio/mpeg">
-    </audio>
-
-    <script>
-    let savedTime = localStorage.getItem("musicTime");
-    const audio = document.getElementById("bgMusic");
-    audio.addEventListener("loadedmetadata", () => {
-        if (savedTime) {
-            audio.currentTime = parseFloat(savedTime);
-        }
-        audio.play();
-    });
-
-    setInterval(() => {
-        localStorage.setItem("musicTime", audio.currentTime);
-    }, 500);
-    </script>
-
-
     <main class="game-container">
         {% block content %}{% endblock %}
     </main>

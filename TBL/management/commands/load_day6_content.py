@@ -53,7 +53,8 @@ class Command(BaseCommand):
             locations=gimnasio,
             character=came,
             contexto_situation="En la clase de educación física el profesor les asigna dos opciones: armar acrosport o una clase de algún deporte. Came conocerá a una persona.",
-            moraleja="En el día seis más que elegir si hacer una actividad en conjunto es la elección de cómo expresar el disgusto o lo incomodidad con la gente una habilidad muy necesaria si se quiere tener una buena convivencia con lo otros, el problema es cómo se comunica este disgusto, empáticamente, con amabilidad y respeto con el otro, o simplemente descartar cualquier modo de pensar ajeno y no intentar llegar a un consenso con otros"
+            moraleja="En el día seis CaME más que elegir si hacer una actividad en conjunto es la elección de cómo expresar el disgusto o lo incomodidad con la gente una habilidad muy necesaria si se quiere tener una buena convivencia con lo otros, el problema es cómo se comunica este disgusto, empáticamente, con amabilidad y respeto con el otro, o simplemente descartar cualquier modo de pensar ajeno y no intentar llegar a un consenso con otros",
+            audio="sounds/gimnasio.mp3"
         )
 
         line1 = Dialogue.objects.create(situation=situation, line_type='narration', text="Mmmm parece ser el gimnasio de la escuela...", order=1, decision_point=False)

@@ -54,7 +54,8 @@ class Command(BaseCommand):
             locations=biblioteca,
             character=npc,
             contexto_situation="Came busca un libro de fantasía pero alguien más lo quiere también.",
-            moraleja="En el dia uno came empieza su nueva vida en una nueva escuela con la esperanza de hacer amigos y la primera decisión lo que busca es empezar este objetivo con una habilidad que es muy importante a la hora de trabajar con gente que es el manejo de la ira y la resolución de conflictos, la primera opción demuestra como alguien que no puede manejar un conflicto con otra persona lleva a que tanto la otra persona como un externo juzguen y no quieran socializar con, mientras que la segunda opción es un ejemplo de cómo la comprensión y empatía con la otra persona para resolver un conflicto te puede llevar a hacer un nuevo amigo"
+            moraleja="En el dia uno Came empieza su nueva vida en una nueva escuela con la esperanza de hacer amigos y la primera decisión lo que busca es empezar este objetivo con una habilidad que es muy importante a la hora de trabajar con gente que es el manejo de la ira y la resolución de conflictos, la primera opción demuestra como alguien que no puede manejar un conflicto con otra persona lleva a que tanto la otra persona como un externo juzguen y no quieran socializar con, mientras que la segunda opción es un ejemplo de cómo la comprensión y empatía con la otra persona para resolver un conflicto te puede llevar a hacer un nuevo amigo",
+            audio="sounds/bilbio.mp3"
         )
 
         line1 = Dialogue.objects.create(situation=situation, line_type='narration', text="Mmmm parece ser la biblioteca central de la escuela...", order=1, decision_point=False)
