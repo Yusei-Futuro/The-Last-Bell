@@ -55,7 +55,7 @@ class Command(BaseCommand):
             character=npc,
             contexto_situation="Came es invitado a jugar un partido de futbol por un nuevo compañero",
             moraleja="En el dia dos Came tiene que decidir si se arma de valor parapoder cumplir su objetivo de hacer más amigos o seguir en suzona de confort, lo que se busca acá es mostrar cómo a veces hay que arriesgarse a la hora de socializar con personas y que hay que aprovechar las instancias que tenemos para poder hacer amigos nuevos",
-            audio="sounds/cnachafuchi"
+            audio="sounds/cnachafuchi.mp3"
         )
         
         line1 = Dialogue.objects.create(situation=situation, line_type='narration', text="Came llega al patio y observa el amplio espacio.", order=1, decision_point=False)

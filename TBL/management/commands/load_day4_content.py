@@ -56,7 +56,7 @@ class Command(BaseCommand):
             audio="sounds/plaza.mp3"
         )
 
-        line1 = Dialogue.objects.create(situation=situation, character=came, line_type='npc_thought', text="Esta música está muy buena", order=1, decision_point=False)
+        line1 = Dialogue.objects.create(situation=situation, character=came, line_type='came_thought', text="Esta música está muy buena", order=1, decision_point=False)
         line2 = Dialogue.objects.create(situation=situation, character=came, line_type='narration', text="Mientras la chica escucha musica, se le cae un audifono", order=2, decision_point=False)
         line3 = Dialogue.objects.create(situation=situation, character=npc, line_type='came_speech', text="Oye disculpa, se te cayo el audifono", order=3, decision_point=False)
         line4 = Dialogue.objects.create(situation=situation, character=came, line_type='narration', text="Came se apresura a recoger el audifono y se lo entrega", order=4, decision_point=False)
