@@ -37,16 +37,6 @@
         <div class="results mt-5">
 
             <h2>Amigos hasta ahora: {{ current_friends }}/7</h2>
-
-            <p class="lead mt-4">
-                {% if current_day < 7 %}
-                    Has completado el prologo
-                    ¿Listo para continuar al Día {{ current_day }}?
-                {% else %}
-                    ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
-                {% endif %}
-            </p>
-
             <div class="text-center" style="
               background-color: rgba(255, 255, 255, 0.6);
               color: black;
@@ -54,6 +44,14 @@
               border-radius: 10px;
               backdrop-filter: blur(4px);
             ">
+                <p>
+                {% if current_day < 7 %}
+                    Has completado el prologo
+                    ¿Listo para continuar al Día {{ current_day }}?
+                {% else %}
+                    ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
+                {% endif %}
+                </p>
                 <p>{{ situation.moraleja }}</p>
             </div>
             <div>
@@ -83,15 +81,6 @@
 
             <h2>Amigos hasta ahora: {{ current_friends }}/7</h2>
 
-            <p class="lead mt-4">
-                {% if current_day < 7 %}
-                    Has completado la situación del día {{ current_day|add:-1 }}.
-                    ¿Listo para continuar al Día {{ current_day }}?
-                {% else %}
-                    ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
-                {% endif %}
-            </p>
-
             <div class="text-center" style="
               background-color: rgba(255, 255, 255, 0.6);
               color: black;
@@ -99,6 +88,14 @@
               border-radius: 10px;
               backdrop-filter: blur(4px);
             ">
+                <p class="lead mt-4">
+                {% if current_day < 7 %}
+                    Has completado la situación del día {{ current_day|add:-1 }}.
+                    ¿Listo para continuar al Día {{ current_day }}?
+                {% else %}
+                    ¡Has completado todos los días! Veamos cuántos amigos conseguiste.
+                {% endif %}
+                </p>
                 <p>{{ situation.moraleja }}</p>
             </div>
             <div>
@@ -124,7 +121,24 @@
     {% endif %}
 
 </div>
+<audio id="audio" loop preload="auto">
+    <source src="{% static sounds/mix-audio.MP3 %}" type="audio/mpeg">
+    </audio>
 
+    <script>
+    let savedTime = localStorage.getItem("musicTime");
+    const audio = document.getElementById("audio");
+    audio.addEventListener("loadedmetadata", () => {
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+        audio.play();
+    });
+
+    setInterval(() => {
+        localStorage.setItem("musicTime", audio.currentTime);
+    }, 500);
+    </script>
 </section>
 
 {% endblock %}

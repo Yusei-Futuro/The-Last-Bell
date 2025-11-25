@@ -13,7 +13,7 @@
     <h1 class="game-title">The Last Bell</h1>
     <p class="game-subtitle">Un juego sobre inclusión y empatía</p>
 
-    <div class="menu-options  d-flex flex-column align-items-center"">
+    <div class="menu-options  d-flex flex-column align-items-center">
         {% if has_saved_game %}
         <a href="{% url 'load_game' %}" class="btn btn-primary btn-lg mb-3">
             Continuar Partida
@@ -30,6 +30,24 @@
         </a>
     </div>
 </div>
+<audio id="audio" loop preload="auto">
+    <source src="{% static sounds/mix-audio.MP3 %}" type="audio/mpeg">
+    </audio>
+
+    <script>
+    let savedTime = localStorage.getItem("musicTime");
+    const audio = document.getElementById("audio");
+    audio.addEventListener("loadedmetadata", () => {
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+        audio.play();
+    });
+
+    setInterval(() => {
+        localStorage.setItem("musicTime", audio.currentTime);
+    }, 500);
+    </script>
 </section>
 
 {% endblock %}
